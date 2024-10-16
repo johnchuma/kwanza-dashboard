@@ -1,38 +1,49 @@
-.App {
-  text-align: center;
-}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
+@layer base {
+  @font-face {
+    font-family: 'google-fonts';
+    font-style: light;
+    font-weight: 300;
+    font-display: swap;
+    src: url(/public/google-sans/ProductSans-Light.ttf) ;
+  }
+  @font-face {
+    font-family: 'google-fonts';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url(/public/google-sans/ProductSans-Regular.ttf) ;
+  }
+  @font-face {
+    font-family: 'google-fonts';
+    font-style: medium;
+    font-weight: 500;
+    font-display: swap;
+    src: url(/public/google-sans/ProductSans-Medium.ttf) ;
+  }
+  @font-face {
+    font-family: 'google-fonts';
+    font-style: bold;
+    font-weight: 700;
+    font-display: swap;
+    src: url(/public/google-sans/ProductSans-Bold.ttf) ;
+  }
+  @font-face {
+    font-family: 'google-fonts';
+    font-style: bold;
+    font-weight: 900;
+    font-display: swap;
+    src: url(/public/google-sans/ProductSans-Black.ttf) ;
   }
 }
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.input-style {
+  @apply w-full border-muted dark:bg-black dark:bg-opacity-10 border-opacity-30 focus:border-primary focus:ring-primary rounded-lg
 }
 
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.search-style {
+  @apply border-muted dark:bg-black dark:bg-opacity-10 border-opacity-10 focus:border-primary focus:ring-primary rounded-xl
 }
