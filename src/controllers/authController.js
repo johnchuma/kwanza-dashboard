@@ -7,6 +7,7 @@ export const app = axios.create({
 export const sendCode = async (data) => {
   return await app.post("/users/auth/send-code", data);
 };
+
 export const verifyCode = async (data) => {
   return await app.post("/users/auth/confirm-code", data);
 };

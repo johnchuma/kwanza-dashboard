@@ -1,6 +1,11 @@
-const Switch = ({ isActive }) => {
+const Switch = ({ isActive, onClick }) => {
   return (
-    <div className="flex items-center">
+    <div
+      onClick={() => {
+        onClick();
+      }}
+      className="flex items-center"
+    >
       <label
         className={`flex items-center cursor-pointer w-12 h-6 bg-gray-200 rounded-full transition duration-200 ease-in-out ${
           isActive ? "bg-green-400" : ""

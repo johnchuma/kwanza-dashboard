@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import Loader from "../../components/loader";
 import { useNavigate } from "react-router-dom";
 import SidebarItem from "../../components/sidebarItem";
@@ -14,6 +14,7 @@ import {
   getAudiences,
 } from "../../controllers/audenciesController";
 import toast from "react-hot-toast";
+import { UserContext } from "../../layouts/dashboardLayout";
 
 const AudiencesPage = () => {
   const navigate = useNavigate();
@@ -27,6 +28,8 @@ const AudiencesPage = () => {
   const [showOptions, setShowOptions] = useState(false);
   const dropdownRef = useRef(null);
   const params = useGetParams();
+  const { user } = useContext(UserContext);
+
   useEffect(() => {
     closePopupMenu(dropdownRef, () => {
       setShowOptions(false);
@@ -51,7 +54,8 @@ const AudiencesPage = () => {
     <Loader />
   ) : (
     <div>
-      <Back />
+      {user.role != "advertiser" && <Back />}
+
       <div className="flex justify-between items-start">
         <div className="space-y-3">
           <h1 className="text-4xl 2xl:text-3xl font-bold">Audiences</h1>

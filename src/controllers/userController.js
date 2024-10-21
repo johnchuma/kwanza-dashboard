@@ -52,3 +52,11 @@ export const registerUser = (data) => {
     },
   });
 };
+
+export const deleteUser = (uuid) => {
+  return app.delete(`/users/${uuid}`, {
+    headers: {
+      Authorization: `Bearer ${getTokens()}`,
+    },
+  });
+};

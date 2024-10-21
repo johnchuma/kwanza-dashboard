@@ -40,6 +40,9 @@
     src: url(/public/google-sans/ProductSans-Black.ttf) ;
   }
 }
+a{
+  @apply text-primary active:text-primary
+}
 .input-style {
   @apply w-full border-muted dark:bg-black dark:bg-opacity-10 border-opacity-30 focus:border-primary focus:ring-primary rounded-lg
 }

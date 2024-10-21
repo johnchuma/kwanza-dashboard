@@ -1,17 +1,28 @@
-import { useEffect, useRef, useState } from "react";
-import { getAdvertisers, getUsers } from "../../controllers/userController";
+import { useContext, useEffect, useRef, useState } from "react";
+import {
+  deleteUser,
+  getAdvertisers,
+  getUsers,
+} from "../../controllers/userController";
 import Spinner from "../../components/spinner";
 import Loader from "../../components/loader";
 import Pagination from "../../components/pagination";
 import { useNavigate } from "react-router-dom";
 import SidebarItem from "../../components/sidebarItem";
-import { AiOutlineEdit, AiOutlineUser } from "react-icons/ai";
+import {
+  AiOutlineDashboard,
+  AiOutlineDelete,
+  AiOutlineEdit,
+  AiOutlineUser,
+} from "react-icons/ai";
 import { closePopupMenu } from "../../utils/closePopupMenu";
 import { HiDotsVertical } from "react-icons/hi";
 import { BsPerson, BsSignpost2 } from "react-icons/bs";
 import { LiaBuysellads } from "react-icons/lia";
 import { useGetParams } from "../../utils/getParams";
 import Back from "../../components/back";
+import toast from "react-hot-toast";
+import { UserContext } from "../../layouts/dashboardLayout";
 
 const AdvertisersPage = () => {
   const navigate = useNavigate();
@@ -25,6 +36,7 @@ const AdvertisersPage = () => {
   const [selectedItem, setSelectedItem] = useState(null);
   const [showOptions, setShowOptions] = useState(false);
   const dropdownRef = useRef(null);
+  const { user } = useContext(UserContext);
   useEffect(() => {
     closePopupMenu(dropdownRef, () => {
       setShowOptions(false);
@@ -32,7 +44,12 @@ const AdvertisersPage = () => {
   }, [dropdownRef]);
 
   useEffect(() => {
-    let path = `agency/${params.uuid}/?limit=${limit}&page=${page}&keyword=${keyword}`;
+    getData();
+  }, [page, keyword]);
+  const getData = () => {
+    let uuid = params.uuid || user.AgencyUser.Agency.uuid;
+    console.log("UUID", uuid);
+    let path = `agency/${uuid}/?limit=${limit}&page=${page}&keyword=${keyword}`;
     getAdvertisers(path).then((response) => {
       console.log(response.data.body);
       const rows = response.data.body.rows;
@@ -41,28 +58,33 @@ const AdvertisersPage = () => {
       setCount(count);
       setLoading(false);
     });
-  }, [page, keyword]);
+  };
   return loading ? (
     <Loader />
   ) : (
     <div>
-      <Back />
-      <div className="flex justify-between items-start">
-        <div className="space-y-3">
-          <h1 className="text-4xl 2xl:text-3xl font-bold">Advertisers</h1>
-          <p className="text-base text-muted dark:text-mutedLight">
-            Manage Advertisers Below
-          </p>
+      {params.uuid && (
+        <div>
+          {user.role != "agency user" && <Back />}
+
+          <div className="flex justify-between items-start">
+            <div className="space-y-3">
+              <h1 className="text-4xl 2xl:text-3xl font-bold">Advertisers</h1>
+              <p className="text-base text-muted dark:text-mutedLight">
+                Manage Advertisers Below
+              </p>
+            </div>
+            <button
+              onClick={() => {
+                navigate(`/add-user/?role=advertiser&uuid=${params.uuid}`);
+              }}
+              className="py-2 px-6 font-semibold rounded-lg bg-primary text-white"
+            >
+              Add Advertiser
+            </button>
+          </div>
         </div>
-        <button
-          onClick={() => {
-            navigate(`/add-user/?role=advertiser&uuid=${params.uuid}`);
-          }}
-          className="py-2 px-6 font-semibold rounded-lg bg-primary text-white"
-        >
-          Add Advertiser
-        </button>
-      </div>
+      )}
       <div className="bg-white  dark:bg-darkLight rounded-2xl mt-4 ">
         <div className="bg-background dark:bg-darkLight rounded-t-2xl bg-opacity-40 px-6 items-center py-4 flex justify-between">
           <h1 className="font-bold text-lg">Advertisers ({count})</h1>
@@ -100,7 +122,15 @@ const AdvertisersPage = () => {
               {data.map((item) => {
                 return (
                   <tr key={item.uuid}>
-                    <td className="text-start py-4">{item.name}</td>
+                    <td className="text-start py-4 hover:text-primary transition-all duration-200">
+                      <button
+                        onClick={() => {
+                          navigate(`/advertiser-overview/?uuid=${item.uuid}`);
+                        }}
+                      >
+                        {item.name}
+                      </button>
+                    </td>
                     <td className="text-start py-4">{item.email}</td>
                     <td className="text-start py-4">{item.phone}</td>
                     <td className="text-start py-4">{item.sspCampaigns}</td>
@@ -123,6 +153,11 @@ const AdvertisersPage = () => {
                               className="bg-white absolute rounded-xl top-4 shadow-lg z-30 right-0 w-52 px-2 py-4"
                             >
                               <SidebarItem
+                                icon={<AiOutlineDashboard />}
+                                path={`/advertiser-overview/?uuid=${item.uuid}`}
+                                title={"Overview"}
+                              />
+                              <SidebarItem
                                 icon={<BsPerson />}
                                 path={`/audiences/?uuid=${item.uuid}`}
                                 title={"Audiences"}
@@ -136,6 +171,16 @@ const AdvertisersPage = () => {
                                 icon={<LiaBuysellads />}
                                 path={`/dsp-campaigns?uuid=${item.uuid}`}
                                 title={"DSP Campaigns"}
+                              />
+                              <SidebarItem
+                                icon={<AiOutlineDelete />}
+                                onClick={() => {
+                                  deleteUser(item.uuid).then((res) => {
+                                    getData();
+                                    toast.success("Deleted successfully");
+                                  });
+                                }}
+                                title={"Delete"}
                               />
                             </div>
                           )}

@@ -28,12 +28,12 @@ import {
   getDSPCampaigns,
 } from "../../controllers/dspCampaignController";
 import { getDSPCampaignStats } from "../../controllers/statsController";
-import DoubleTimeseriesChart from "../../components/doubleTimeseriesChart";
+import DoubleTimeseriesChart from "../../components/charts/doubleTimeseriesChart";
 import { RiAdvertisementLine } from "react-icons/ri";
 import { TbCashRegister } from "react-icons/tb";
 import { LuPanelRightInactive } from "react-icons/lu";
 import OverviewItem from "../../components/overviewItem";
-import TimeseriesChart from "../../components/TimeseriesChart";
+import TimeseriesChart from "../../components/charts/TimeseriesChart";
 
 const DSPCampaignReport = () => {
   const navigate = useNavigate();

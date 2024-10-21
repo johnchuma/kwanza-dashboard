@@ -1,6 +1,6 @@
 import Chart from "react-apexcharts";
 
-const PieChart = ({ title, labels, data }) => {
+const PieChart = ({ title, labels, data, chartType }) => {
   const config = {
     options: {
       chart: {
@@ -13,7 +13,7 @@ const PieChart = ({ title, labels, data }) => {
         position: "bottom", // Adjust position to your preference
       },
       dataLabels: {
-        enabled: true,
+        enabled: false,
       },
       tooltip: {
         enabled: true,
@@ -30,7 +30,7 @@ const PieChart = ({ title, labels, data }) => {
   return (
     <div>
       <Chart
-        type="pie"
+        type={chartType ?? "pie"}
         options={config.options}
         series={config.series}
         height={250}

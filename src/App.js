@@ -43,6 +43,12 @@ import AddDSPCampaignBanner from "./pages/dspCampaigns/addDSPCampaignBanner";
 import DSPCampaignReport from "./pages/dspCampaigns/dspCampaignReports";
 import SSPCampaignReport from "./pages/sspCampaigns/sspCampaignReports";
 import ZoneBannersPage from "./pages/sspCampaigns/zoneBannersPage";
+import PublisherInvoicesPage from "./pages/reports/PublisherInvoicesPage";
+import PublisherRevenueReport from "./pages/reports/publisherRevenueReport";
+import PlanningPage from "./pages/others/planningPage";
+import AdvertiserPaymentReport from "./pages/others/advertiserPaymentReports";
+import AdvertiserOverviewPage from "./pages/overviews/advertiserOverviewPage";
+import AgencyAdvertisersReport from "./pages/reports/agencyAdvertisersReport";
 
 function App() {
   return (
@@ -79,6 +85,10 @@ function App() {
             <Route path="/ssp-campaigns" element={<SSPCampaignsPage />} />
             <Route path="/dsp-campaigns" element={<DSPCampaignsPage />} />
             <Route path="/invoices" element={<AdminInvoices />} />
+            <Route
+              path="/publisher-invoices"
+              element={<PublisherInvoicesPage />}
+            />
             <Route path="/settings" element={<SettingsPage />} />
             <Route path="/add-invoice" element={<AddInvoice />} />
             <Route path="/add-user" element={<AddUser />} />
@@ -90,6 +100,10 @@ function App() {
             <Route
               path="/admin-revenue-report/"
               element={<AdminRevenueReport />}
+            />
+            <Route
+              path="/publisher-revenue-report/"
+              element={<PublisherRevenueReport />}
             />
             <Route
               path="/admin-campaign-report/"
@@ -120,10 +134,23 @@ function App() {
               element={<AddSSPCampaignBanner />}
             />
             <Route
+              path="/agency-advertisers-report"
+              element={<AgencyAdvertisersReport />}
+            />
+            <Route
               path="/add-dsp-campaign-banner"
               element={<AddDSPCampaignBanner />}
             />
+            <Route path="/planning" element={<PlanningPage />} />
+            <Route
+              path="/advertiser-payments-report"
+              element={<AdvertiserPaymentReport />}
+            />
             <Route path="/add-agency-user/:uuid" element={<AddAgencyUser />} />
+            <Route
+              path="/advertiser-overview/"
+              element={<AdvertiserOverviewPage />}
+            />
             <Route path="/add-agency-user/:uuid" element={<AddAgencyUser />} />
             <Route path="/agency/:uuid/users" element={<AgencyUsersPage />} />
             <Route path="/agency/advertisers" element={<AdvertisersPage />} />

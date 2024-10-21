@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { getPublishers, getUsers } from "../../controllers/userController";
 import Spinner from "../../components/spinner";
 import Loader from "../../components/loader";
@@ -13,9 +13,14 @@ import { ImEarth } from "react-icons/im";
 import { GrStatusPlaceholder } from "react-icons/gr";
 import Back from "../../components/back";
 import { getParams, useGetParams } from "../../utils/getParams";
-import { getWebsite, getWebsites } from "../../controllers/websitesController";
+import {
+  deleteWebsite,
+  getWebsite,
+  getWebsites,
+} from "../../controllers/websitesController";
 import moment from "moment";
 import { AiOutlineDelete, AiOutlineEdit } from "react-icons/ai";
+import { UserContext } from "../../layouts/dashboardLayout";
 
 const WebsitesPage = () => {
   const navigate = useNavigate();
@@ -29,6 +34,7 @@ const WebsitesPage = () => {
   const [showOptions, setShowOptions] = useState(false);
   const dropdownRef = useRef(null);
   const params = useGetParams();
+  const { user } = useContext(UserContext);
 
   useEffect(() => {
     closePopupMenu(dropdownRef, () => {
@@ -36,6 +42,9 @@ const WebsitesPage = () => {
     });
   }, [dropdownRef]);
   useEffect(() => {
+    getData();
+  }, [page, keyword]);
+  const getData = () => {
     let path = `${params.uuid}/?limit=${limit}&page=${page}&keyword=${keyword}`;
     getWebsites(path).then((response) => {
       console.log();
@@ -45,13 +54,13 @@ const WebsitesPage = () => {
       setCount(count);
       setLoading(false);
     });
-  }, [page, keyword]);
-
+  };
   return loading ? (
     <Loader />
   ) : (
     <div>
-      <Back />
+      {user.role != "publisher" && <Back />}
+
       <div className="flex justify-between items-start">
         <div className="space-y-3">
           <h1 className="text-4xl 2xl:text-3xl font-bold">Websites</h1>
@@ -137,7 +146,11 @@ const WebsitesPage = () => {
                               />
                               <SidebarItem
                                 icon={<AiOutlineDelete />}
-                                path={`/websites`}
+                                onClick={() => {
+                                  deleteWebsite(item.uuid).then((res) => {
+                                    getData();
+                                  });
+                                }}
                                 title={"Delete Website"}
                               />
                             </div>

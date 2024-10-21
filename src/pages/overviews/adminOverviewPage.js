@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
 import { AiOutlineArrowRight } from "react-icons/ai";
-import TimeseriesChart from "../../components/TimeseriesChart";
+import TimeseriesChart from "../../components/charts/TimeseriesChart";
 import { usage } from "../../utils/constants";
 import { RiAdvertisementLine, RiEarthLine } from "react-icons/ri";
 import { TbCashRegister, TbChevronDown } from "react-icons/tb";
 import { LuPanelRightInactive } from "react-icons/lu";
 import OverviewItem from "../../components/overviewItem";
-import PieChart from "../../components/pieChart";
-import DonutChart from "../../components/donutChart";
+import PieChart from "../../components/charts/pieChart";
+import DonutChart from "../../components/charts/donutChart";
 import { getLogsStats } from "../../controllers/logsController";
 import { getAdminStats } from "../../controllers/statsController";
 import Loader from "../../components/loader";

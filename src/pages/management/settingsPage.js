@@ -13,32 +13,27 @@ import { FaEdit } from "react-icons/fa";
 import Switch from "../../components/switch";
 import TextForm from "../../components/textForm";
 import SubmitButton from "../../components/submitButton";
+import {
+  getSettings,
+  updateSetting,
+} from "../../controllers/settingsController";
+import toast from "react-hot-toast";
 
 const SettingsPage = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
+  const [uploading, setUploading] = useState(false);
   const [data, setData] = useState([]);
-  const [limit, setLimit] = useState(5);
-  const [page, setPage] = useState(1);
-  const [keyword, setKeyword] = useState("");
-  const [count, setCount] = useState(0);
-  const [selectedItem, setSelectedItem] = useState(null);
-  const [showOptions, setShowOptions] = useState(false);
-  const dropdownRef = useRef(null);
+
   useEffect(() => {
-    closePopupMenu(dropdownRef, () => {
-      setShowOptions(false);
-    });
-  }, [dropdownRef]);
-  useEffect(() => {
-    getWebsiteCategories().then((response) => {
-      console.log();
-      const rows = response.data.body;
-      setData(rows);
-      setCount(count);
+    getData();
+  }, []);
+  const getData = () => {
+    getSettings().then((response) => {
+      setData(response.data.body);
       setLoading(false);
     });
-  }, [page, keyword]);
+  };
   return loading ? (
     <Loader />
   ) : (
@@ -55,20 +50,31 @@ const SettingsPage = () => {
       <form
         onSubmit={(e) => {
           e.preventDefault();
+          setUploading(true);
+          const payload = {
+            amount: e.target.amount.value,
+          };
+          updateSetting(payload).then((res) => {
+            setUploading(false);
+            toast.success("Saved successfully");
+            getData();
+          });
         }}
         className="bg-white dark:bg-darkLight py-10 rounded-xl mt-8 w-6/12 px-8"
       >
         <div className="space-y-1">
           <h1 className="text-lg font-bold">Publisher's payment plan</h1>
         </div>
-        <div className="space-y-4 my-4 mb-8">
+        <div className="flex space-x-4 items-center">
           <TextForm
             placeholder={"Enter amount"}
-            name={"clickPayment"}
+            defaultValue={data?.publisherPayment || ""}
+            name={"amount"}
             label={"Payment per click/1000 impressions "}
           />
+          <h1 className="mt-5">TZS</h1>
         </div>
-        <SubmitButton text={`Save Changes`} />
+        <SubmitButton loading={uploading} text={`Save Changes`} />
       </form>
     </div>
   );

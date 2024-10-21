@@ -18,6 +18,7 @@ import { IoDocumentAttachOutline } from "react-icons/io5";
 import { HiOutlineChartBarSquare } from "react-icons/hi2";
 import { useContext } from "react";
 import { UserContext } from "../../layouts/dashboardLayout";
+import SidebarLegalSection from "../legal documentation/sidebarLegalSection";
 
 const AgencySidebar = () => {
   const { user } = useContext(UserContext);
@@ -37,7 +38,11 @@ const AgencySidebar = () => {
           <h1 className="font-bold text-xs text-muted dark:text-mutedLight dark:text-white dark:text-opacity-80 mb-2">
             ACCOUNTS
           </h1>
-          <SidebarItem icon={<LuUsers />} title={"Users"} path="/users" />
+          <SidebarItem
+            icon={<LuUsers />}
+            title={"Agency Users"}
+            path={`/agency/${user.AgencyUser.Agency.uuid}/users`}
+          />
           <SidebarItem
             icon={<BsInstagram />}
             title={`Advertisers`}
@@ -52,29 +57,15 @@ const AgencySidebar = () => {
           <SidebarItem
             icon={<RiBarChartHorizontalFill />}
             title={"Advertisers Reports"}
-            path="/admin-campaign-report"
+            path="/agency-advertisers-report"
           />
-          <SidebarItem
+          {/* <SidebarItem
             icon={<HiOutlineChartBarSquare />}
             title={"Campaigns Reports"}
             path="/admin-revenue-report"
-          />
+          /> */}
         </div>
-        <div className="pt-5">
-          <h1 className="font-bold text-xs text-muted dark:text-mutedLight dark:text-white dark:text-opacity-80 mb-2">
-            LEGAL DOCUMENTS
-          </h1>
-          <SidebarItem
-            icon={<MdOutlinePrivacyTip />}
-            title={"Privacy Policy"}
-            path="/privacy-policy"
-          />
-          <SidebarItem
-            icon={<IoDocumentAttachOutline />}
-            title={"Terms of use"}
-            path="/terms-of-use"
-          />
-        </div>
+        <SidebarLegalSection />
       </div>
       {/* <button className="bg-[#3B3C65]  text-base font-semibold text-white rounded-xl py-[12px] flex justify-center items-center space-x-3  mb-8">
         <div className="text-xl">

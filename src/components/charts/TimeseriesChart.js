@@ -14,10 +14,10 @@ const TimeseriesChart = ({
       chart: {
         height: 70,
         toolbar: {
-          show: true,
+          show: false,
         },
         zoom: {
-          enabled: true,
+          enabled: false,
         },
       },
       xaxis: {

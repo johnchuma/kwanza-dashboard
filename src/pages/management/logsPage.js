@@ -100,32 +100,6 @@ const LogsPage = () => {
                     <td className="text-start py-4">{item.User.role}</td>
                     <td className="text-start py-4">{item.log}</td>
                     <td className="text-start py-4">{item.name}</td>
-                    <td className="text-start py-4">
-                      <div className="relative">
-                        <HiDotsVertical
-                          className="cursor-pointer"
-                          onClick={() => {
-                            if (showOptions == false) {
-                              setSelectedItem(item);
-                              setShowOptions(!showOptions);
-                            }
-                          }}
-                        />
-                        {showOptions == true &&
-                          selectedItem.uuid == item.uuid && (
-                            <div
-                              ref={dropdownRef}
-                              className="bg-white absolute rounded-xl top-4 shadow-lg z-30 right-0 w-52 px-2 py-4"
-                            >
-                              <SidebarItem
-                                icon={<BsTrash />}
-                                path={`/`}
-                                title={"Delete"}
-                              />
-                            </div>
-                          )}
-                      </div>
-                    </td>
                   </tr>
                 );
               })}

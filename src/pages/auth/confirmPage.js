@@ -11,7 +11,7 @@ const ConfirmPage = () => {
   const navigate = useNavigate();
   return (
     <div className="w-screen min-h-screen bg-background  flex justify-center items-center text-dark">
-      <div className="w-8/12 2xl:w-6/12 rounded-2xl bg-white flex">
+      <div className="w-8/12 2xl:w-5/12 rounded-2xl bg-white flex">
         <form
           onSubmit={(e) => {
             e.preventDefault();

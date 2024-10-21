@@ -11,15 +11,14 @@ import Back from "../../components/back";
 import { useGetParams } from "../../utils/getParams";
 import { getWebsiteCategories } from "../../controllers/websiteCategoriesController";
 import { addZone } from "../../controllers/zonesController";
+import { PublisherContext, UserContext } from "../../layouts/dashboardLayout";
+import { addInvoice } from "../../controllers/invoicesControllers";
 
 const AddInvoice = () => {
   const [uploading, setUploading] = useState(false);
   const navigate = useNavigate();
-  useEffect(() => {
-    // getWebsiteCategories().then((response) => {
-    //   setCategories(response.data.body);
-    // });
-  }, []);
+  const { user } = useContext(UserContext);
+  const { revenue } = useContext(PublisherContext);
   return (
     <div>
       <Back />
@@ -33,24 +32,25 @@ const AddInvoice = () => {
         onSubmit={(e) => {
           e.preventDefault();
           const payload = {
-            name: e.target.name.value,
-            type: e.target.type.value,
-            pageUrl: e.target.pageUrl.value,
-            height: e.target.height.value,
-            width: e.target.width.value,
+            amount: e.target.amount.value,
+            user_uuid: user.uuid,
           };
-          console.log(payload);
-          setUploading(true);
-          addZone(payload)
-            .then((data) => {
-              toast.success("added successfully");
-              navigate(-1);
-              setUploading(false);
-            })
-            .catch((err) => {
-              setUploading(false);
-              showError(err);
-            });
+          if (payload.amount > revenue) {
+            toast.error("You don't have enough balance");
+          } else {
+            console.log(payload);
+            setUploading(true);
+            addInvoice(payload)
+              .then((data) => {
+                toast.success("added successfully");
+                navigate(-1);
+                setUploading(false);
+              })
+              .catch((err) => {
+                setUploading(false);
+                showError(err);
+              });
+          }
         }}
         className="bg-white dark:bg-darkLight py-12 rounded-xl mt-8 w-6/12 px-8"
       >

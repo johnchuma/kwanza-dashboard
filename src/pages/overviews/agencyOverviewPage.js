@@ -1,28 +1,35 @@
-import { useState } from "react";
-import { AiOutlineArrowRight } from "react-icons/ai";
-import TimeseriesChart from "../../components/TimeseriesChart";
-import { usage } from "../../utils/constants";
-import { RiAdvertisementLine, RiEarthLine } from "react-icons/ri";
+import { useContext, useEffect, useState } from "react";
 import { TbCashRegister } from "react-icons/tb";
-import { LuPanelRightInactive } from "react-icons/lu";
 import OverviewItem from "../../components/overviewItem";
-import PieChart from "../../components/pieChart";
-import DonutChart from "../../components/donutChart";
 import { BsGraphUpArrow, BsInstagram } from "react-icons/bs";
-import { MdOutlineAdsClick } from "react-icons/md";
-import GroupedBarChart from "../../components/groupbarChart";
-import { FiUsers } from "react-icons/fi";
 import { HiOutlineUsers } from "react-icons/hi";
+import AdvertisersPage from "../accounts/advertisersPage";
+import { getAgencyOverviewStats } from "../../controllers/statsController";
+import { UserContext } from "../../layouts/dashboardLayout";
+import Loader from "../../components/loader";
 
 const AgencyOverviewPage = () => {
-  const [activeTab, setActiveTab] = useState(0);
-  return (
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const { user } = useContext(UserContext);
+  useEffect(() => {
+    getAgencyOverviewStats(user.AgencyUser.Agency.uuid).then((res) => {
+      console.log(res.data);
+      setLoading(false);
+      setData(res.data.body);
+    });
+  }, []);
+  return loading ? (
+    <Loader />
+  ) : (
     <div>
       <div className="flex justify-between">
         <div className="space-y-2">
-          <h1 className="text-4xl font-bold">Overview</h1>
+          <h1 className="text-4xl 2xl:text-3xl font-bold">
+            {user.AgencyUser.Agency.name}
+          </h1>
           <p className="text-base text-muted dark:text-mutedLight">
-            Campaigns data overview
+            Overview stats for {user.AgencyUser.Agency.name}
           </p>
         </div>
 
@@ -35,28 +42,28 @@ const AgencyOverviewPage = () => {
 
       <div className="grid grid-cols-4 gap-4 mt-4">
         <OverviewItem
-          value={"30"}
+          value={data.activeCampaigns}
           label={"Active Campaigns"}
           actionTitle={"View Campaigns"}
           action={() => {}}
           icon={<TbCashRegister />}
         />
         <OverviewItem
-          value={"246"}
+          value={data.campaigns}
           label={"Campaigns"}
           actionTitle={"View Campaigns"}
           action={() => {}}
           icon={<BsGraphUpArrow />}
         />
         <OverviewItem
-          value={"20"}
+          value={data.agencyUsers}
           label={"Users"}
           actionTitle={"View Users"}
           action={() => {}}
           icon={<HiOutlineUsers />}
         />
         <OverviewItem
-          value={"20"}
+          value={data.agencyAdvertisers}
           label={"Advertisers"}
           actionTitle={"View Advertisers"}
           action={() => {}}
@@ -64,46 +71,7 @@ const AgencyOverviewPage = () => {
         />
       </div>
 
-      <div className="flex space-x-4 mt-4">
-        <div className="w-8/12 bg-white dark:bg-darkLight py-8 rounded-xl  p-5">
-          <div className="">
-            <h1 className="font-bold text-2xl">Campaign Reports</h1>
-            <p className="text-sm text-muted dark:text-mutedLight">
-              Top 5 campaigns
-            </p>
-            <GroupedBarChart
-              data1={[120, 70, 80, 40]}
-              data2={[60, 40, 50, 30]}
-              label1={"Impressions"}
-              label2={"Clicks"}
-              categories={[
-                "Airtel campaign",
-                "Vodacom Campaign",
-                "Stanbic Campaign",
-                "SAG Customer Service",
-              ]}
-              title={""}
-            />
-          </div>
-        </div>
-        <div className="w-4/12 bg-white dark:bg-darkLight py-8 rounded-xl  p-5">
-          <h1 className="font-bold text-2xl">Devices Impression</h1>
-          <p className="text-sm text-muted dark:text-mutedLight">
-            Campaign devices distribution
-          </p>
-          <div className="mt-6">
-            <DonutChart
-              data={[30, 12, 50, 40]}
-              labels={[
-                "Andoid (30)",
-                "IOS (12)",
-                "Windows (50)",
-                "Macontosh (50)",
-              ]}
-            />
-          </div>
-        </div>
-      </div>
+      <AdvertisersPage />
     </div>
   );
 };

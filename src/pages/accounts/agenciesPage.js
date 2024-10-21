@@ -4,13 +4,14 @@ import Spinner from "../../components/spinner";
 import Loader from "../../components/loader";
 import Pagination from "../../components/pagination";
 import { useNavigate } from "react-router-dom";
-import { getAgencies } from "../../controllers/agencyController";
+import { deleteAgency, getAgencies } from "../../controllers/agencyController";
 import moment from "moment";
 import { HiDotsVertical } from "react-icons/hi";
 import SidebarItem from "../../components/sidebarItem";
-import { AiOutlineEdit, AiOutlineUser } from "react-icons/ai";
+import { AiOutlineDelete, AiOutlineEdit, AiOutlineUser } from "react-icons/ai";
 import { closePopupMenu } from "../../utils/closePopupMenu";
 import { RiAdvertisementLine } from "react-icons/ri";
+import toast from "react-hot-toast";
 
 const AgenciesPage = () => {
   const navigate = useNavigate();
@@ -24,6 +25,9 @@ const AgenciesPage = () => {
   const [showOptions, setShowOptions] = useState(false);
 
   useEffect(() => {
+    getData();
+  }, [page, keyword]);
+  const getData = () => {
     let path = `?limit=${limit}&page=${page}&keyword=${keyword}`;
     getAgencies(path).then((response) => {
       console.log(response.data);
@@ -34,7 +38,7 @@ const AgenciesPage = () => {
       setCount(count);
       setLoading(false);
     });
-  }, [page, keyword]);
+  };
 
   const dropdownRef = useRef(null);
   useEffect(() => {
@@ -86,6 +90,9 @@ const AgenciesPage = () => {
                 <th className="text-start text-muted dark:text-mutedLight">
                   Email
                 </th>
+                <th className="text-start text-muted dark:text-mutedLight">
+                  Type
+                </th>
               </tr>
             </thead>
             <tbody className="mt-2">
@@ -97,6 +104,20 @@ const AgenciesPage = () => {
                     </td>
                     <td className="text-start py-4">{item.name}</td>
                     <td className="text-start py-4">{item.email}</td>
+                    <td className="text-start py-4">
+                      {item.isMain ? (
+                        <button
+                          title="Advertisers who self onboard will be assigned to the main agency"
+                          className="text-primary w-24 bg-primary bg-opacity-20 px-3 py-1 rounded-lg"
+                        >
+                          Main
+                        </button>
+                      ) : (
+                        <button className="text-gray-700 w-24 bg-gray-500 bg-opacity-20 px-3 py-1 rounded-lg">
+                          Normal
+                        </button>
+                      )}
+                    </td>
                     <td className="text-start py-4">
                       <div className="relative">
                         <HiDotsVertical
@@ -123,8 +144,14 @@ const AgenciesPage = () => {
                                 title={"Agency Users"}
                               />
                               <SidebarItem
-                                icon={<AiOutlineEdit />}
-                                title={"Edit Agency"}
+                                icon={<AiOutlineDelete />}
+                                onClick={() => {
+                                  deleteAgency(item.uuid).then((res) => {
+                                    getData();
+                                    toast.success("Deleted successfully");
+                                  });
+                                }}
+                                title={"Delete Agency"}
                               />
                             </div>
                           )}

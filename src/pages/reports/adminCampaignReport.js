@@ -3,7 +3,7 @@ import { AiOutlineArrowRight } from "react-icons/ai";
 import { RiAdvertisementLine, RiEarthLine } from "react-icons/ri";
 import { TbCashRegister } from "react-icons/tb";
 import { LuPanelRightInactive } from "react-icons/lu";
-import TimeseriesChart from "../../components/TimeseriesChart";
+import TimeseriesChart from "../../components/charts/TimeseriesChart";
 import { usage } from "../../utils/constants";
 
 const AdminCampaignReport = () => {

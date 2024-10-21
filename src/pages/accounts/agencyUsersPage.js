@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { getUsers } from "../../controllers/userController";
 import Spinner from "../../components/spinner";
 import Loader from "../../components/loader";
@@ -12,6 +12,7 @@ import { AiOutlineDelete, AiOutlineEdit, AiOutlineUser } from "react-icons/ai";
 import { closePopupMenu } from "../../utils/closePopupMenu";
 import { getAgencyUsers } from "../../controllers/agencyUserController";
 import Back from "../../components/back";
+import { UserContext } from "../../layouts/dashboardLayout";
 
 const AgencyUsersPage = () => {
   const navigate = useNavigate();
@@ -23,6 +24,7 @@ const AgencyUsersPage = () => {
   const [count, setCount] = useState(0);
   const [selectedItem, setSelectedItem] = useState(null);
   const [showOptions, setShowOptions] = useState(false);
+  const { user } = useContext(UserContext);
   const { uuid } = useParams();
   useEffect(() => {
     let path = `${uuid}/?limit=${limit}&page=${page}&keyword=${keyword}`;
@@ -47,7 +49,8 @@ const AgencyUsersPage = () => {
     <Loader />
   ) : (
     <div>
-      <Back />
+      {user.role != "agency user" && <Back />}
+
       <div className="flex justify-between items-start">
         <div className="space-y-3">
           <h1 className="text-4xl 2xl:text-3xl font-bold">Agency Users</h1>

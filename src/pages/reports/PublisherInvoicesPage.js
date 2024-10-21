@@ -12,14 +12,10 @@ import { AiOutlineEdit } from "react-icons/ai";
 import { FaEdit } from "react-icons/fa";
 import Switch from "../../components/switch";
 import { UserContext } from "../../layouts/dashboardLayout";
-import {
-  addInvoicePayment,
-  deleteInvoicePayment,
-  getAdminInvoices,
-} from "../../controllers/invoicesControllers";
-import toast from "react-hot-toast";
+import { getUserInvoices } from "../../controllers/invoicesControllers";
+import Pagination from "../../components/pagination";
 
-const AdminInvoices = () => {
+const PublisherInvoicesPage = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState([]);
@@ -37,11 +33,8 @@ const AdminInvoices = () => {
     });
   }, [dropdownRef]);
   useEffect(() => {
-    getData();
-  }, [page, keyword]);
-  const getData = () => {
-    let path = `?limit=${limit}&page=${page}&keyword=${keyword}`;
-    getAdminInvoices(path).then((response) => {
+    let path = `${user.uuid}/?limit=${limit}&page=${page}&keyword=${keyword}`;
+    getUserInvoices(path).then((response) => {
       const rows = response.data.body.rows;
       const count = response.data.body.count;
       console.log(rows);
@@ -51,12 +44,11 @@ const AdminInvoices = () => {
       setCount(count);
       setLoading(false);
     });
-  };
+  }, [page, keyword]);
   return loading ? (
     <Loader />
   ) : (
     <div>
-      <Back />
       <div className="flex justify-between items-start">
         <div className="space-y-3">
           <h1 className="text-4xl 2xl:text-3xl font-bold">Invoices</h1>
@@ -93,15 +85,11 @@ const AdminInvoices = () => {
                 <th className="text-start text-muted dark:text-mutedLight">
                   Invoice sent at
                 </th>
-                <th className="text-start text-muted dark:text-mutedLight">
-                  Publisher name
-                </th>
+
                 <th className="text-start text-muted dark:text-mutedLight">
                   Amount
                 </th>
-                <th className="text-start text-muted dark:text-mutedLight">
-                  Is Paid
-                </th>
+                <th className="text-start text-muted dark:text-mutedLight"></th>
               </tr>
             </thead>
             <tbody className="mt-2">
@@ -111,78 +99,33 @@ const AdminInvoices = () => {
                     <td className="text-start py-4">
                       {moment(item.createdAt).format("yyy, MMM DD")}
                     </td>
-                    <td className="text-start py-4">{item.User.name}</td>
                     <td className="text-start py-4">{item.amount} TZS</td>
-                    <td className="text-start py-2">
-                      <div>
-                        {item.InvoicePayment ? (
-                          <Switch
-                            onClick={() => {
-                              deleteInvoicePayment(
-                                `${item.InvoicePayment.uuid}/payment`
-                              ).then((res) => {
-                                getData();
-                                toast.success("Payment record deleted");
-                              });
-                            }}
-                            isActive={true}
-                          />
-                        ) : (
-                          <Switch
-                            onClick={() => {
-                              addInvoicePayment(`${item.uuid}/payment`).then(
-                                (res) => {
-                                  getData();
-                                  toast.success("Recorded Successfully");
-                                }
-                              );
-                            }}
-                            isActive={false}
-                          />
-                        )}
-                      </div>
-                    </td>
                     <td className="text-start py-4">
-                      <div className="relative">
-                        <HiDotsVertical
-                          className=" cursor-pointer"
-                          onClick={() => {
-                            if (showOptions == false) {
-                              setSelectedItem(item);
-                              setShowOptions(!showOptions);
-                            }
-                          }}
-                        />
-                        {showOptions == true &&
-                          selectedItem.uuid == item.uuid && (
-                            <div
-                              ref={dropdownRef}
-                              className="bg-white absolute rounded-xl top-4 shadow-lg z-30 right-0 w-64 px-2 py-4"
-                            >
-                              <SidebarItem
-                                icon={<BsDownload />}
-                                path={`/`}
-                                title={"Download Invoice"}
-                              />
-                            </div>
-                          )}
-                      </div>
+                      {item.InvoicePayment ? (
+                        <button className="bg-green-200 w-24  px-3 py-1 rounded-lg text-green-700 font-bold">
+                          Paid
+                        </button>
+                      ) : (
+                        <button className="bg-red-100 w-32  px-3 py-1 rounded-lg text-red-700 font-bold">
+                          On Process
+                        </button>
+                      )}
                     </td>
                   </tr>
                 );
               })}
             </tbody>
           </table>
-          {/* <Pagination
+          <Pagination
             limit={limit}
             count={count}
             setPage={setPage}
             page={page}
-          /> */}
+          />
         </div>
       </div>
     </div>
   );
 };
 
-export default AdminInvoices;
+export default PublisherInvoicesPage;

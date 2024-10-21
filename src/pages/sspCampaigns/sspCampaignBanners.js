@@ -100,6 +100,10 @@ const SSPCampaignBanners = () => {
                     <div className="">Destination URL:</div>{" "}
                     <span>{item.destinationURL}</span>{" "}
                   </h1>
+                  <h1 className="flex space-x-1 text-base 2xl:text-sm text-muted dark:text-mutedLight">
+                    <div className="">Linked Zones:</div>{" "}
+                    <span>{item.linkedZonesCount}</span>{" "}
+                  </h1>
 
                   {/* <button
                     onClick={() => {

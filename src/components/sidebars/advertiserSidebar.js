@@ -5,9 +5,18 @@ import { LiaBuysellads } from "react-icons/lia";
 import { TbCashRegister, TbLogs, TbReport } from "react-icons/tb";
 import { BsBox2, BsInstagram, BsSignpost2 } from "react-icons/bs";
 import { TiSocialInstagram } from "react-icons/ti";
-import { MdAdsClick, MdOutlinePrivacyTip, MdPublic } from "react-icons/md";
-import { RiAdvertisementLine, RiEarthLine } from "react-icons/ri";
-import { LuUsers } from "react-icons/lu";
+import {
+  MdAdsClick,
+  MdOutlinePrivacyTip,
+  MdPeople,
+  MdPublic,
+} from "react-icons/md";
+import {
+  RiAdvertisementLine,
+  RiEarthLine,
+  RiSecurePaymentLine,
+} from "react-icons/ri";
+import { LuUsers, LuUsers2 } from "react-icons/lu";
 import { FiBookOpen } from "react-icons/fi";
 import { IoMdOptions } from "react-icons/io";
 import { IoDocumentAttachOutline } from "react-icons/io5";
@@ -15,6 +24,7 @@ import { useContext } from "react";
 import { UserContext } from "../../layouts/dashboardLayout";
 import { GrBarChart, GrPlan } from "react-icons/gr";
 import { SlCalender } from "react-icons/sl";
+import SidebarLegalSection from "../legal documentation/sidebarLegalSection";
 
 const AdvertiserSidebar = () => {
   const { user } = useContext(UserContext);
@@ -44,6 +54,11 @@ const AdvertiserSidebar = () => {
             title={"DSP Campaigns"}
             path={`/dsp-campaigns/?uuid=${user.uuid}`}
           />
+          <SidebarItem
+            icon={<LuUsers2 />}
+            title={"Audiences"}
+            path={`/audiences/?uuid=${user.uuid}`}
+          />
         </div>
 
         <div className="pt-5">
@@ -51,31 +66,17 @@ const AdvertiserSidebar = () => {
             OTHERS
           </h1>
           <SidebarItem
-            icon={<GrBarChart />}
-            title={"Campaigns Reports"}
-            path="/admin-campaign-report"
+            icon={<RiSecurePaymentLine />}
+            title={"Payments Report"}
+            path="/advertiser-payments-report"
           />
           <SidebarItem
             icon={<SlCalender />}
             title={"Planning"}
-            path="/admin-campaign-report"
+            path="/planning"
           />
         </div>
-        <div className="pt-5">
-          <h1 className="font-bold text-xs text-muted dark:text-mutedLight dark:text-white dark:text-opacity-80 mb-2">
-            LEGAL DOCUMENTS
-          </h1>
-          <SidebarItem
-            icon={<MdOutlinePrivacyTip />}
-            title={"Privacy Policy"}
-            path="/privacy-policy"
-          />
-          <SidebarItem
-            icon={<IoDocumentAttachOutline />}
-            title={"Terms of use"}
-            path="/terms-of-use"
-          />
-        </div>
+        <SidebarLegalSection />
       </div>
       {/* <button className="bg-[#3B3C65]  text-base font-semibold text-white rounded-xl py-[12px] flex justify-center items-center space-x-3  mb-8">
         <div className="text-xl">

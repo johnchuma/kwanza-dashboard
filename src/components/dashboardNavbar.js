@@ -21,7 +21,7 @@ const DashboardNavbar = ({ isDark, setIsDark }) => {
     });
   }, [dropdownRef]);
   return (
-    <div className="flex justify-end items-center space-x-5 py-4">
+    <div className="flex justify-end items-center space-x-5 py-4 z-50">
       <div className="text-2xl text-muted dark:text-mutedLight dark:text-white">
         <div
           onClick={() => {
@@ -47,7 +47,7 @@ const DashboardNavbar = ({ isDark, setIsDark }) => {
         {showAction && (
           <div
             ref={dropdownRef}
-            className="bg-white  dark:bg-darkLight  py-5 rounded-lg absolute right-0 w-48 space-y-2 mt-2"
+            className="bg-white  dark:bg-darkLight   py-5 rounded-lg absolute right-0 w-48 space-y-2 mt-2"
           >
             <div
               onClick={() => {

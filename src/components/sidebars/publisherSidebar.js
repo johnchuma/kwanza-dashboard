@@ -18,10 +18,15 @@ import { IoMdOptions } from "react-icons/io";
 import { IoDocumentAttachOutline } from "react-icons/io5";
 import { PiChartDonutDuotone, PiInvoice } from "react-icons/pi";
 import { UserContext } from "../../layouts/dashboardLayout";
-import { useContext } from "react";
+import { useContext, useState } from "react";
+import { GrMoney } from "react-icons/gr";
+import Modal from "../modal";
+import { showError } from "../../utils/showError";
+import SidebarLegalSection from "../legal documentation/sidebarLegalSection";
 
 const PublisherSidebar = () => {
-  const { user } = useContext(UserContext);
+  const { user, setShowPrivacyModal, setShowTermsModal } =
+    useContext(UserContext);
 
   return (
     <div className="px-4 justify-between flex flex-col h-screen">
@@ -48,7 +53,7 @@ const PublisherSidebar = () => {
           <SidebarItem
             icon={<PiInvoice />}
             title={"Invoices"}
-            path="/invoices"
+            path={`/publisher-invoices/`}
           />
         </div>
 
@@ -57,36 +62,12 @@ const PublisherSidebar = () => {
             REPORTS
           </h1>
           <SidebarItem
-            icon={<TiChartLineOutline />}
-            title={"Website Reports"}
-            path="/admin-campaign-report"
-          />
-          <SidebarItem
-            icon={<RiFolderChartLine />}
-            title={"Zones Reports"}
-            path="/admin-revenue-report"
-          />
-          <SidebarItem
-            icon={<PiChartDonutDuotone />}
+            icon={<GrMoney />}
             title={"Revenue Reports"}
-            path="/admin-revenue-report"
+            path="/publisher-revenue-report"
           />
         </div>
-        <div className="pt-5">
-          <h1 className="font-bold text-xs text-muted dark:text-mutedLight dark:text-white dark:text-opacity-80 mb-2">
-            LEGAL DOCUMENTS
-          </h1>
-          <SidebarItem
-            icon={<MdOutlinePrivacyTip />}
-            title={"Privacy Policy"}
-            path="/privacy-policy"
-          />
-          <SidebarItem
-            icon={<IoDocumentAttachOutline />}
-            title={"Terms of use"}
-            path="/terms-of-use"
-          />
-        </div>
+        <SidebarLegalSection />
       </div>
       {/* <button className="bg-[#3B3C65]  text-base font-semibold text-white rounded-xl py-[12px] flex justify-center items-center space-x-3  mb-8">
         <div className="text-xl">

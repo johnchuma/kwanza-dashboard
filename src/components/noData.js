@@ -11,7 +11,7 @@ const NoData = ({ title, description }) => {
           {title ?? "No Data"}
         </h1>
         <p className="text-muted text-opacity-60 2xl:text-sm dark:text-mutedLight text-center">
-          {description ?? "Your data will be shown here where available"}{" "}
+          {description ?? "Your data will be shown here, when available"}{" "}
         </p>
       </div>
     </div>

@@ -1,23 +1,46 @@
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { AiOutlineArrowRight } from "react-icons/ai";
-import TimeseriesChart from "../../components/TimeseriesChart";
+import TimeseriesChart from "../../components/charts/TimeseriesChart";
 import { usage } from "../../utils/constants";
 import { RiAdvertisementLine, RiEarthLine } from "react-icons/ri";
 import { TbCashRegister } from "react-icons/tb";
 import { LuPanelRightInactive } from "react-icons/lu";
 import OverviewItem from "../../components/overviewItem";
-import PieChart from "../../components/pieChart";
-import DonutChart from "../../components/donutChart";
+import PieChart from "../../components/charts/pieChart";
+import DonutChart from "../../components/charts/donutChart";
 import { BsGraphUpArrow } from "react-icons/bs";
-import { MdOutlineAdsClick } from "react-icons/md";
-import GroupedBarChart from "../../components/groupbarChart";
-import HorizontalBarChart from "../../components/horizontalBarChart";
+import {
+  MdOutlineAccountBalanceWallet,
+  MdOutlineAdsClick,
+} from "react-icons/md";
+import GroupedBarChart from "../../components/charts/groupbarChart";
+import HorizontalBarChart from "../../components/charts/horizontalBarChart";
 import { useNavigate } from "react-router-dom";
+import { getPublisherStats } from "../../controllers/statsController";
+import { PublisherContext, UserContext } from "../../layouts/dashboardLayout";
+import Loader from "../../components/loader";
+import { GrMoney } from "react-icons/gr";
+import { PiHandWithdraw } from "react-icons/pi";
 
 const PublisherOverviewPage = () => {
   const [activeTab, setActiveTab] = useState(0);
   const navigate = useNavigate();
-  return (
+  const [loading, setLoading] = useState(true);
+  const { user } = useContext(UserContext);
+  const [stats, setStats] = useState(null);
+  const [data, setData] = useState([]);
+  const { revenue, setRevenue } = useContext(PublisherContext);
+  useEffect(() => {
+    getPublisherStats(user.uuid).then((response) => {
+      console.log("data", response.data.body);
+      setLoading(false);
+      setStats(response.data.body);
+      setRevenue(response.data.body.balance);
+    });
+  }, []);
+  return loading ? (
+    <Loader />
+  ) : (
     <div>
       <div className="flex justify-between">
         <div className="space-y-2">
@@ -34,39 +57,39 @@ const PublisherOverviewPage = () => {
             }}
             className="py-2 rounded-lg bg-primary text-white  px-4 font-bold"
           >
-            GENERATE INVOICE
+            Generate Invoice
           </button>
         </div>
       </div>
 
       <div className="grid grid-cols-4 gap-4 mt-4">
         <OverviewItem
-          value={"20"}
+          value={stats.zones}
           label={"Zones"}
-          actionTitle={"View Campaigns"}
+          actionTitle={"View Zones"}
           action={() => {}}
           icon={<LuPanelRightInactive />}
         />
         <OverviewItem
-          value={"$600"}
-          label={"Revenue"}
-          actionTitle={"View Distribution"}
+          value={`${stats.revenue}`}
+          label={"Revenue (TZS)"}
+          actionTitle={"View Stats"}
           action={() => {}}
-          icon={<BsGraphUpArrow />}
+          icon={<GrMoney />}
         />
         <OverviewItem
-          value={"500"}
-          label={"Withdawn"}
-          actionTitle={"View Distribution"}
+          value={stats.paid}
+          label={"Withdawn (TZS)"}
+          actionTitle={"View Report"}
           action={() => {}}
-          icon={<MdOutlineAdsClick />}
+          icon={<PiHandWithdraw />}
         />
         <OverviewItem
-          value={"$100"}
-          label={"Balance"}
-          actionTitle={"View Distribution"}
+          value={stats.balance}
+          label={"Balance (TZS)"}
+          actionTitle={"View Stats"}
           action={() => {}}
-          icon={<MdOutlineAdsClick />}
+          icon={<MdOutlineAccountBalanceWallet />}
         />
       </div>
 
@@ -75,20 +98,13 @@ const PublisherOverviewPage = () => {
           <div className="">
             <h1 className="font-bold text-2xl">Zones earnings comparison</h1>
             <p className="text-sm text-muted dark:text-mutedLight">
-              Comparison of zones comparison
+              Comparison of zones earnings
             </p>
             <HorizontalBarChart
-              data1={[120, 70, 40, 120, 70, 120, 70, 80, 40]}
+              data1={stats.zonesStats.map((item) => item.revenue)}
               label1={"Earnings"}
               label2={" "}
-              categories={[
-                "Zone 1 - (Mwananchi)",
-                "Zone 2 - (Mwananchi)",
-                "Zone 4 - (Mwananchi)",
-                "Zone 1 - (Mwanaclick)",
-                "Zone 2 - (Mwanaclick)",
-                "Zone 2 - (Mwanasport)",
-              ]}
+              categories={stats.zonesStats.map((item) => item.zone)}
               title={""}
             />
           </div>
@@ -96,12 +112,12 @@ const PublisherOverviewPage = () => {
         <div className="w-4/12 bg-white py-8 rounded-xl  p-5">
           <h1 className="font-bold text-2xl">Zones distribution</h1>
           <p className="text-sm text-muted dark:text-mutedLight">
-            Campaign devices distribution
+            Website and number of zones they have
           </p>
           <div className="mt-6">
             <DonutChart
-              data={[4, 6, 10]}
-              labels={["Mwananchi(4)", "Mwanaclick (6)", "Mwanasport (10)"]}
+              data={stats.websiteZones.map((item) => item.zones)}
+              labels={stats.websiteZones.map((item) => item.website)}
             />
           </div>
         </div>
