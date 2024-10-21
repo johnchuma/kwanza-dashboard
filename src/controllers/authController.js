@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const app = axios.create({
-  baseURL: "http://localhost:5000",
+  baseURL: "http://3.254.95.107:5000",
 });
 
 export const sendCode = async (data) => {
