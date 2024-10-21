@@ -19,7 +19,7 @@ import {
 import Loader from "../../components/loader";
 import { useGetParams } from "../../utils/getParams";
 
-const AddAudiencePage = () => {
+const AddAudiencePage = ({ uuid, setExpand, expand, close }) => {
   const [uploading, setUploading] = useState(false);
   const [loading, setloading] = useState(true);
 
@@ -40,12 +40,23 @@ const AddAudiencePage = () => {
     <Loader />
   ) : (
     <div>
-      <Back />
-      <div className="space-y-2">
-        <h1 className="text-4xl 2xl:text-3xl font-bold">New Audience</h1>
-        <p className="text-base text-muted dark:text-mutedLight">
-          Enter Audience details below
-        </p>
+      {!uuid && <Back />}
+
+      <div className="flex justify-between">
+        <div className="space-y-1">
+          <h1 className="text-3xl 2xl:text-2xl font-bold">New Audience</h1>
+          <p className="text-base 2xl:text-sm text-muted dark:text-mutedLight">
+            Enter Audience details below
+          </p>
+        </div>
+        {uuid && (
+          <AiOutlineClose
+            onClick={() => {
+              close();
+            }}
+            className="mt-2 text-muted"
+          />
+        )}
       </div>
       <form
         onSubmit={(e) => {
@@ -54,14 +65,18 @@ const AddAudiencePage = () => {
             name: e.target.name.value,
             country: e.target.country.value,
             pretarget: e.target.pretarget.value,
-            user_uuid: params.uuid,
+            user_uuid: uuid ?? params.uuid,
             interests: selectedInterests.map((item) => item.value),
           };
           setUploading(true);
           addAudience(payload)
             .then((data) => {
               toast.success("added successfully");
-              navigate(-1);
+              if (uuid) {
+                close();
+              } else {
+                navigate(-1);
+              }
               setUploading(false);
             })
             .catch((err) => {
@@ -69,8 +84,15 @@ const AddAudiencePage = () => {
               showError(err);
             });
         }}
+        className={`  ${
+          uuid ? (expand ? "w-6/12 " : "w-full px-2") : "w-6/12"
+        }`}
       >
-        <div className="bg-white dark:bg-darkLight py-6 rounded-xl mt-8 w-6/12 px-8">
+        <div
+          className={`bg-white dark:bg-darkLight   rounded-xl   ${
+            uuid ? "mt-4 py-4 " : "mt-8 py-6 px-8"
+          }  `}
+        >
           <div className="space-y-1">
             <h1 className="text-lg font-bold">Register new audience here</h1>
             <p className="text-base text-muted dark:text-mutedLight">
@@ -115,7 +137,11 @@ const AddAudiencePage = () => {
           </div>
         </div>
         {pretargetedSelected && (
-          <div className="bg-white dark:bg-darkLight py-6 rounded-xl mt-4 w-6/12 px-8">
+          <div
+            className={`bg-white dark:bg-darkLight  rounded-xl ${
+              uuid ? "mt-0" : "mt-4 py-6 px-8"
+            }   `}
+          >
             <div className="space-y-1">
               <h1 className="text-lg font-bold">Select audience interest</h1>
               <p className="text-base text-muted dark:text-mutedLight">
@@ -146,6 +172,9 @@ const AddAudiencePage = () => {
               {categoryInterests.length > 0 && (
                 <div
                   onClick={() => {
+                    if (uuid) {
+                      setExpand();
+                    }
                     setShowInterest(true);
                   }}
                   className="flex space-x-2 items-center pt-1 pb-4 cursor-pointer"
@@ -158,20 +187,29 @@ const AddAudiencePage = () => {
                 showModal={showInterest}
                 setShowModal={() => {
                   setShowInterest(false);
+                  if (uuid) {
+                    setExpand();
+                  }
                 }}
+                expanded={expand}
                 content={
                   <div>
                     <div className="flex justify-between items-start mt-2">
-                      <div>
+                      <div className=" space-y-1">
                         <h1 className="text-2xl font-semibold text-dark">
                           Interests
                         </h1>
-                        <p className="text-muted ">Click to select interest</p>
+                        <p className="text-muted 2xl:text-sm ">
+                          Click to select interest
+                        </p>
                       </div>
                       <div
                         className="cursor-pointer"
                         onClick={(e) => {
                           setShowInterest(false);
+                          if (uuid) {
+                            setExpand();
+                          }
                         }}
                       >
                         <AiOutlineClose className="text-xl text-muted cursor-pointer" />
@@ -218,7 +256,7 @@ const AddAudiencePage = () => {
               {selectedInterests.length > 0 && (
                 <div className=" bg-background bg-opacity-50 py-4 px-4 rounded-xl mt-3">
                   <h1 className="text-lg font-bold">Selected interests</h1>
-                  <p className="text-muted">Click to remove</p>
+                  <p className="text-muted 2xl:text-sm">Click to remove</p>
                   <div className="flex flex-wrap mt-4">
                     {selectedInterests.map((item) => {
                       return (

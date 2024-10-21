@@ -16,6 +16,8 @@ import { BsPlus } from "react-icons/bs";
 import { getAudiences } from "../../controllers/audenciesController";
 import Loader from "../../components/loader";
 import { addDSPCampaign } from "../../controllers/dspCampaignController";
+import ModalRight from "../../components/modalRight";
+import AddAudiencePage from "./addAudiencesPage";
 
 const AddDSPCampaign = () => {
   const [uploading, setUploading] = useState(false);
@@ -26,6 +28,8 @@ const AddDSPCampaign = () => {
   const [selectedRevenue, setSelectedRevenue] = useState(null);
   const [audiences, setAudiences] = useState([]);
   const [budget, setBudget] = useState(0);
+  const [showRightModal, setShowRightModal] = useState(false);
+  const [showInterest, setShowInterest] = useState(false);
   useEffect(() => {
     findData();
   }, []);
@@ -42,6 +46,26 @@ const AddDSPCampaign = () => {
   ) : (
     <div>
       <Back />
+      <ModalRight
+        showModal={showRightModal}
+        expanded={showInterest}
+        content={
+          <AddAudiencePage
+            close={() => {
+              setShowRightModal(false);
+              findData();
+            }}
+            expand={showInterest}
+            setExpand={() => {
+              setShowInterest(!showInterest);
+            }}
+            uuid={params.uuid}
+          />
+        }
+        setShowModal={() => {
+          setShowRightModal(false);
+        }}
+      />
       <div className="space-y-2">
         <h1 className="text-4xl 2xl:text-3xl font-bold">New campaign</h1>
         <p className="text-base text-muted dark:text-mutedLight">
@@ -81,8 +105,8 @@ const AddDSPCampaign = () => {
         className=" grid grid-cols-1 gap-2 "
       >
         {/* Basic informations */}
-        <div className="bg-white dark:bg-darkLight py-6 rounded-xl mt-8  px-8">
-          <div className="w-6/12">
+        <div className="bg-white w-6/12 dark:bg-darkLight py-6 rounded-xl mt-8  px-8">
+          <div className="">
             <div className="space-y-1">
               <h1 className="text-lg font-bold">Basic Details</h1>
               <p className="text-base text-muted dark:text-mutedLight">
@@ -114,8 +138,8 @@ const AddDSPCampaign = () => {
         </div>
         {/* Campaign date */}
         {destination && (
-          <div className="bg-white dark:bg-darkLight py-6 rounded-xl mt-2 px-8">
-            <div className="w-6/12">
+          <div className="bg-white w-6/12 dark:bg-darkLight py-6 rounded-xl mt-2 px-8">
+            <div className="">
               <div className="space-y-1">
                 <h1 className="text-lg font-bold">Campaign Duration</h1>
                 <p className="text-base text-muted dark:text-mutedLight">
@@ -143,8 +167,8 @@ const AddDSPCampaign = () => {
         )}
         {/* Pricing */}
         {destination && (
-          <div className="bg-white dark:bg-darkLight py-6 rounded-xl mt-2 px-8">
-            <div className="w-6/12">
+          <div className="bg-white w-6/12 dark:bg-darkLight py-6 rounded-xl mt-2 px-8">
+            <div className="">
               <div className="space-y-1">
                 <h1 className="text-lg font-bold">Budget</h1>
                 <p className="text-base text-muted dark:text-mutedLight">
@@ -180,8 +204,8 @@ const AddDSPCampaign = () => {
         )}
         {budget > 0 && budget.length > 3 && (
           <div>
-            <div className="bg-white dark:bg-darkLight py-6 rounded-xl mt-2 px-8">
-              <div className="w-6/12">
+            <div className="bg-white w-6/12 dark:bg-darkLight py-6 rounded-xl mt-2 px-8">
+              <div className="">
                 <div className="space-y-1">
                   <h1 className="text-lg font-bold">Audience</h1>
                   <p className="text-base text-muted dark:text-mutedLight">
@@ -197,7 +221,8 @@ const AddDSPCampaign = () => {
                   />
                   <div
                     onClick={() => {
-                      navigate(`/add-audience/?uuid=${params.uuid}`);
+                      // navigate(`/add-audience/?uuid=${params.uuid}`);
+                      setShowRightModal(true);
                     }}
                     className="flex space-x-1 font-medium cursor-pointer text-primary items-center"
                   >

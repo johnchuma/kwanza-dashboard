@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const app = axios.create({
-  baseURL: "http://3.254.95.107:5000",
+  baseURL: "https://api.kwanza.io",
 });
 
 export const sendCode = async (data) => {

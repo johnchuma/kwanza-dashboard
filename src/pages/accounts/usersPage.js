@@ -4,6 +4,7 @@ import Spinner from "../../components/spinner";
 import Loader from "../../components/loader";
 import Pagination from "../../components/pagination";
 import { useNavigate } from "react-router-dom";
+import moment from "moment";
 
 const UsersPage = () => {
   const navigate = useNavigate();
@@ -61,6 +62,9 @@ const UsersPage = () => {
             <thead>
               <tr>
                 <th className="text-start text-muted dark:text-mutedLight">
+                  Created At
+                </th>
+                <th className="text-start text-muted dark:text-mutedLight">
                   Name
                 </th>
                 <th className="text-start text-muted dark:text-mutedLight">
@@ -77,7 +81,10 @@ const UsersPage = () => {
             <tbody className="mt-2">
               {data.map((item) => {
                 return (
-                  <tr>
+                  <tr key={item.uuid}>
+                    <td className="text-start py-4">
+                      {moment(item.createdAt).format("yyy,MMM DD")}
+                    </td>
                     <td className="text-start py-4">{item.name}</td>
                     <td className="text-start py-4">{item.email}</td>
                     <td className="text-start py-4">{item.phone}</td>

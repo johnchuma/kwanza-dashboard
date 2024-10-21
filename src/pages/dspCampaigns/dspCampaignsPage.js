@@ -204,11 +204,12 @@ const DSPCampaignsPage = () => {
                                   onClick={() => {
                                     deleteDSPCampaign(item.uuid).then(
                                       (data) => {
+                                        setShowOptions(false);
                                         getData();
                                       }
                                     );
                                   }}
-                                  title={"Delete Website"}
+                                  title={"Delete Campaign"}
                                 />
                               </div>
                             )}

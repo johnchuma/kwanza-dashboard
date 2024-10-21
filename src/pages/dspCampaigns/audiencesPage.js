@@ -15,6 +15,7 @@ import {
 } from "../../controllers/audenciesController";
 import toast from "react-hot-toast";
 import { UserContext } from "../../layouts/dashboardLayout";
+import Pagination from "../../components/pagination";
 
 const AudiencesPage = () => {
   const navigate = useNavigate();
@@ -39,6 +40,7 @@ const AudiencesPage = () => {
     findData();
   }, [page, keyword]);
   const findData = () => {
+    setLoading(true);
     let path = `user/${params.uuid}/?limit=${limit}&page=${page}&keyword=${keyword}`;
     getAudiences(path).then((response) => {
       const rows = response.data.body.rows;
@@ -143,12 +145,12 @@ const AudiencesPage = () => {
               })}
             </tbody>
           </table>
-          {/* <Pagination
+          <Pagination
             limit={limit}
             count={count}
             setPage={setPage}
             page={page}
-          /> */}
+          />
         </div>
       </div>
     </div>
