@@ -8,7 +8,6 @@ const DoubleTimeseriesChart = ({
   yaxis2,
   ylabel1,
   ylabel2,
-  chartType,
   ylabel,
   setYear,
   xlabel,
@@ -54,21 +53,28 @@ const DoubleTimeseriesChart = ({
       legend: {
         show: true, // Enable legends to differentiate between the lines
       },
-      colors: ["#21C55D", "#F97316"], // Colors for the two lines
+      colors: ["#21C55D", "#F97316"], // Colors for the two charts
       tooltip: {
-        enabled: true,
+        enabled: false,
       },
       dataLabels: {
         enabled: false,
+      },
+      plotOptions: {
+        bar: {
+          columnWidth: "50%", // Adjust the bar width
+        },
       },
     },
     series: [
       {
         name: ylabel1 ?? "",
+        type: "bar", // First series as a bar chart
         data: yaxis1 ?? [],
       },
       {
         name: ylabel2 ?? "",
+        type: "bar", // Second series as a line chart
         data: yaxis2 ?? [],
       },
     ],
@@ -76,12 +82,7 @@ const DoubleTimeseriesChart = ({
 
   return (
     <div>
-      <Chart
-        type={chartType || "line"}
-        height={380}
-        options={config.options}
-        series={config.series}
-      />
+      <Chart height={380} options={config.options} series={config.series} />
     </div>
   );
 };

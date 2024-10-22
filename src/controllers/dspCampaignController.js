@@ -16,7 +16,7 @@ export const getDSPCampaigns = async (path) => {
   });
 };
 export const getDSPCampaign = async (uuid) => {
-  return await app.patch(`/dsp-campaigns/${uuid}`, {
+  return await app.get(`/dsp-campaigns/${uuid}`, {
     headers: {
       Authorization: `Bearer ${getTokens()}`,
     },

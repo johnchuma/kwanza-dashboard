@@ -5,6 +5,7 @@ const TextForm = ({
   required,
   name,
   defaultValue,
+  onClick,
   value,
   disabled,
   inputType,
@@ -16,6 +17,11 @@ const TextForm = ({
         required={required ?? true}
         type={inputType || "text"}
         name={name}
+        onClick={() => {
+          if (onClick) {
+            onClick();
+          }
+        }}
         value={value}
         disabled={disabled || false}
         defaultValue={defaultValue}

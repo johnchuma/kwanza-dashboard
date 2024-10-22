@@ -60,7 +60,7 @@ const AdminInvoices = () => {
       <div className="flex justify-between items-start">
         <div className="space-y-3">
           <h1 className="text-4xl 2xl:text-3xl font-bold">Invoices</h1>
-          <p className="text-base text-muted dark:text-mutedLight">
+          <p className="text-sm text-muted dark:text-mutedLight">
             Manage publisher's invoices
           </p>
         </div>

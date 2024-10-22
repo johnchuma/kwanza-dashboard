@@ -34,7 +34,7 @@ const AdminOverviewPage = () => {
       <div className="flex justify-between">
         <div className="space-y-2">
           <h1 className="text-4xl font-bold">Overview</h1>
-          <p className="text-base text-muted dark:text-mutedLight">
+          <p className="text-sm text-muted dark:text-mutedLight">
             Daily usage and engagement data
           </p>
         </div>
@@ -110,6 +110,7 @@ const AdminOverviewPage = () => {
               Daily users sessions overtime
             </p>
             <TimeseriesChart
+              chartType={"bar"}
               xaxis={stats.logsStats.map((item) => item.loggedAt)}
               yaxis={stats.logsStats.map((item) => item.count)}
             />

@@ -33,6 +33,7 @@ import {
   getDSPCampaigns,
 } from "../../controllers/dspCampaignController";
 import NoData from "../../components/noData";
+import toast from "react-hot-toast";
 
 const SSPCampaignsPage = () => {
   const navigate = useNavigate();
@@ -75,9 +76,9 @@ const SSPCampaignsPage = () => {
       {user.role != "advertiser" && <Back />}
 
       <div className="flex justify-between items-start">
-        <div className="space-y-3">
+        <div className="space-y-2">
           <h1 className="text-4xl 2xl:text-3xl font-bold">SSP Campaigns</h1>
-          <p className="text-base text-muted dark:text-mutedLight">
+          <p className="text-sm text-muted dark:text-mutedLight">
             Create SSP campaigns Below
           </p>
         </div>
@@ -198,13 +199,12 @@ const SSPCampaignsPage = () => {
                                 <SidebarItem
                                   icon={<AiOutlineDelete />}
                                   onClick={() => {
-                                    deleteSSPCampaign(item.uuid).then(
-                                      (data) => {
-                                        getData();
-                                      }
-                                    );
+                                    deleteSSPCampaign(item.uuid).then((res) => {
+                                      getData();
+                                      toast.success("Saved successfully");
+                                    });
                                   }}
-                                  title={"Delete Website"}
+                                  title={"Delete Campaign"}
                                 />
                               </div>
                             )}

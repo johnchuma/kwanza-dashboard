@@ -21,9 +21,10 @@ import {
   AiOutlineFileImage,
   AiOutlineGlobal,
 } from "react-icons/ai";
-import { getZones } from "../../controllers/zonesController";
+import { deleteZone, getZones } from "../../controllers/zonesController";
 import { IoCodeSlash } from "react-icons/io5";
 import ModalRight from "../../components/modalRight";
+import toast from "react-hot-toast";
 
 const WebsitesPage = () => {
   const navigate = useNavigate();
@@ -47,6 +48,9 @@ const WebsitesPage = () => {
     });
   }, [dropdownRef]);
   useEffect(() => {
+    getData();
+  }, [page, keyword]);
+  const getData = () => {
     let path = `${params.uuid}/?limit=${limit}&page=${page}&keyword=${keyword}`;
     getZones(path).then((response) => {
       const rows = response.data.body.rows;
@@ -55,8 +59,7 @@ const WebsitesPage = () => {
       setCount(count);
       setLoading(false);
     });
-  }, [page, keyword]);
-
+  };
   return loading ? (
     <Loader />
   ) : (
@@ -175,6 +178,16 @@ const WebsitesPage = () => {
                                 icon={<AiOutlineFileImage />}
                                 path={`/zone-banners/?uuid=${item.uuid}`}
                                 title={"Linked Banners"}
+                              />
+                              <SidebarItem
+                                icon={<AiOutlineDelete />}
+                                onClick={() => {
+                                  deleteZone(item.uuid).then((data) => {
+                                    getData();
+                                    toast.success("Deleted successfully");
+                                  });
+                                }}
+                                title={"Delete zone"}
                               />
                             </div>
                           )}

@@ -4,7 +4,7 @@ import TextForm from "../../components/textForm";
 import { showError } from "../../utils/showError";
 import toast from "react-hot-toast";
 import SelectForm from "../../components/selectForm";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { registerUser } from "../../controllers/userController";
 import { AiOutlineArrowLeft } from "react-icons/ai";
 import Back from "../../components/back";
@@ -15,32 +15,44 @@ import moment from "moment";
 import { BsPlus } from "react-icons/bs";
 import { getAudiences } from "../../controllers/audenciesController";
 import Loader from "../../components/loader";
-import { addDSPCampaign } from "../../controllers/dspCampaignController";
+import {
+  editDSPCampaign,
+  getDSPCampaign,
+} from "../../controllers/dspCampaignController";
 import ModalRight from "../../components/modalRight";
 import AddAudiencePage from "./addAudiencesPage";
 
-const AddDSPCampaign = () => {
+const EditDSPCampaign = () => {
   const [uploading, setUploading] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
-  const params = useGetParams();
+  const params = useParams();
   const [destination, setDestination] = useState(null);
   const [selectedRevenue, setSelectedRevenue] = useState(null);
   const [audiences, setAudiences] = useState([]);
   const [budget, setBudget] = useState(0);
   const [showRightModal, setShowRightModal] = useState(false);
   const [showInterest, setShowInterest] = useState(false);
+  const [campaign, setCampaign] = useState(null);
+
   useEffect(() => {
     findData();
   }, []);
   const findData = () => {
-    let path = `user/${params.uuid}/?limit=${100}&page=${1}&keyword=${""}`;
-    getAudiences(path).then((response) => {
-      const rows = response.data.body.rows;
-      setAudiences(rows);
-      setLoading(false);
+    getDSPCampaign(params.uuid).then((res) => {
+      setCampaign(res.data.body);
+      console.log(res.data.body);
+      let path = `user/${
+        res.data.body.User.uuid
+      }/?limit=${100}&page=${1}&keyword=${""}`;
+      getAudiences(path).then((response) => {
+        const rows = response.data.body.rows;
+        setAudiences(rows);
+        setLoading(false);
+      });
     });
   };
+
   return loading ? (
     <Loader />
   ) : (
@@ -67,9 +79,9 @@ const AddDSPCampaign = () => {
         }}
       />
       <div className="space-y-2">
-        <h1 className="text-4xl 2xl:text-3xl font-bold">New campaign</h1>
-        <p className="text-sm text-muted dark:text-mutedLight">
-          Enter campaign details below
+        <h1 className="text-4xl 2xl:text-3xl font-bold">{campaign.name}</h1>
+        <p className="text-base text-muted dark:text-mutedLight">
+          Modify campaign details below
         </p>
       </div>
       <form
@@ -86,16 +98,11 @@ const AddDSPCampaign = () => {
           };
           console.log(payload);
           setUploading(true);
-          addDSPCampaign(payload)
+          editDSPCampaign(campaign.uuid, payload)
             .then((response) => {
-              toast.success("added successfully");
+              toast.success("Changed successfully");
               console.log(response.data.body);
               navigate(-1);
-              setTimeout(() => {
-                navigate(
-                  `/dsp-campaign-banners/?uuid=${response.data.body.uuid}`
-                );
-              }, 50);
             })
             .catch((err) => {
               setUploading(false);
@@ -117,6 +124,7 @@ const AddDSPCampaign = () => {
               <TextForm
                 placeholder={"Enter campaign name"}
                 name={"name"}
+                defaultValue={campaign.name}
                 label={"Campaign name"}
               />
 
@@ -128,6 +136,7 @@ const AddDSPCampaign = () => {
                   className="input-style"
                   placeholder={"Enter campaign destination"}
                   name={"destination"}
+                  defaultValue={campaign.destination}
                   onChange={(e) => {
                     setDestination(e.target.value);
                   }}
@@ -137,7 +146,7 @@ const AddDSPCampaign = () => {
           </div>
         </div>
         {/* Campaign date */}
-        {destination && (
+        {
           <div className="bg-white w-6/12 dark:bg-darkLight py-6 rounded-xl mt-2 px-8">
             <div className="">
               <div className="space-y-1">
@@ -150,13 +159,16 @@ const AddDSPCampaign = () => {
                 <TextForm
                   placeholder={""}
                   name={"activateDate"}
-                  defaultValue={moment(Date.now()).format("yyy-MM-DD")}
+                  defaultValue={moment(campaign.activateDate).format(
+                    "yyy-MM-DD"
+                  )}
                   inputType={"date"}
                   label={"Activate Date (Default: Immediately)"}
                 />
                 <TextForm
                   placeholder={""}
                   required={false}
+                  defaultValue={moment(campaign.expireDate).format("yyy-MM-DD")}
                   name={"expireDate"}
                   inputType={"date"}
                   label={"Expire Date (Default: Infinitly)"}
@@ -164,9 +176,9 @@ const AddDSPCampaign = () => {
               </div>
             </div>
           </div>
-        )}
+        }
         {/* Pricing */}
-        {destination && (
+        {
           <div className="bg-white w-6/12 dark:bg-darkLight py-6 rounded-xl mt-2 px-8">
             <div className="">
               <div className="space-y-1">
@@ -183,6 +195,7 @@ const AddDSPCampaign = () => {
                       className="input-style"
                       placeholder={"Enter your budget"}
                       name={"budget"}
+                      defaultValue={campaign.budget}
                       required={true}
                       onChange={(e) => {
                         setBudget(e.target.value);
@@ -201,8 +214,8 @@ const AddDSPCampaign = () => {
               </div>
             </div>
           </div>
-        )}
-        {budget > 0 && budget.length > 3 && (
+        }
+        {
           <div>
             <div className="bg-white w-6/12 dark:bg-darkLight py-6 rounded-xl mt-2 px-8">
               <div className="">
@@ -215,6 +228,7 @@ const AddDSPCampaign = () => {
                 <div className="space-y-4 my-6 mb-8">
                   <SelectForm
                     name={"audience"}
+                    defaultValue={campaign.Audience.uuid}
                     values={audiences.map((item) => item.uuid)}
                     options={audiences.map((item) => item.name)}
                     label={"Select audience"}
@@ -234,12 +248,12 @@ const AddDSPCampaign = () => {
                 </div>
               </div>
             </div>
-            <SubmitButton loading={uploading} text={"Create campaign"} />
+            <SubmitButton loading={uploading} text={"Save Changes"} />
           </div>
-        )}
+        }
       </form>
     </div>
   );
 };
 
-export default AddDSPCampaign;
+export default EditDSPCampaign;

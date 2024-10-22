@@ -49,6 +49,7 @@ import PlanningPage from "./pages/others/planningPage";
 import AdvertiserPaymentReport from "./pages/others/advertiserPaymentReports";
 import AdvertiserOverviewPage from "./pages/overviews/advertiserOverviewPage";
 import AgencyAdvertisersReport from "./pages/reports/agencyAdvertisersReport";
+import EditDSPCampaign from "./pages/dspCampaigns/editDSPCampaign";
 
 function App() {
   return (
@@ -152,6 +153,10 @@ function App() {
               element={<AdvertiserOverviewPage />}
             />
             <Route path="/add-agency-user/:uuid" element={<AddAgencyUser />} />
+            <Route
+              path="/edit-dsp-campaign/:uuid"
+              element={<EditDSPCampaign />}
+            />
             <Route path="/agency/:uuid/users" element={<AgencyUsersPage />} />
             <Route path="/agency/advertisers" element={<AdvertisersPage />} />
           </Route>

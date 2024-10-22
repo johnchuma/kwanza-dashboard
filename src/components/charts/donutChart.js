@@ -40,7 +40,7 @@ const DonutChart = ({ title, labels, data }) => {
         type="donut" // Updated type to "donut"
         options={config.options}
         series={config.series}
-        height={250}
+        height={300}
       />
     </div>
   );

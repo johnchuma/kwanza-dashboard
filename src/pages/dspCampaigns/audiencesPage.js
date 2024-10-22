@@ -59,9 +59,9 @@ const AudiencesPage = () => {
       {user.role != "advertiser" && <Back />}
 
       <div className="flex justify-between items-start">
-        <div className="space-y-3">
+        <div className="space-y-2">
           <h1 className="text-4xl 2xl:text-3xl font-bold">Audiences</h1>
-          <p className="text-base text-muted dark:text-mutedLight">
+          <p className="text-sm text-muted dark:text-mutedLight">
             View system user audiences{" "}
           </p>
         </div>

@@ -51,9 +51,9 @@ const AgenciesPage = () => {
   ) : (
     <div>
       <div className="flex justify-between items-start">
-        <div className="space-y-3">
+        <div className="space-y-2">
           <h1 className="text-4xl 2xl:text-3xl  font-bold">Agencies</h1>
-          <p className="text-base text-muted dark:text-mutedLight">
+          <p className="text-sm text-muted dark:text-mutedLight">
             Manage agencies Below
           </p>
         </div>
@@ -108,12 +108,12 @@ const AgenciesPage = () => {
                       {item.isMain ? (
                         <button
                           title="Advertisers who self onboard will be assigned to the main agency"
-                          className="text-primary w-24 bg-primary bg-opacity-20 px-3 py-1 rounded-lg"
+                          className="text-primary w-24 text-sm  bg-primary bg-opacity-20 px-3 py-1 rounded-lg"
                         >
                           Main
                         </button>
                       ) : (
-                        <button className="text-gray-700 w-24 bg-gray-500 bg-opacity-20 px-3 py-1 rounded-lg">
+                        <button className="text-gray-700 w-24 text-sm  bg-gray-500 bg-opacity-20 px-3 py-1 rounded-lg">
                           Normal
                         </button>
                       )}

@@ -62,10 +62,10 @@ const DSPCampaignReport = () => {
     <div>
       <Back />
       <div className="flex justify-between items-start">
-        <div className="space-y-3">
-          <h1 className="text-4xl 2xl:text-3xl font-bold">Campaign Stats</h1>
-          <p className="text-base text-muted dark:text-mutedLight">
-            DSP campaign stats
+        <div className="space-y-2">
+          <h1 className="text-4xl 2xl:text-3xl font-bold">{params.name}</h1>
+          <p className="text-sm text-muted dark:text-mutedLight">
+            View {params.name} stats
           </p>
         </div>
       </div>
@@ -100,7 +100,7 @@ const DSPCampaignReport = () => {
           icon={<RiAdvertisementLine />}
         />
       </div>
-      <div className="bg-white p-6 rounded-xl mb-4">
+      <div className="bg-white p-6 space-y-1 rounded-xl mb-4">
         <h1 className="font-bold text-2xl">Impressions & CTR</h1>
         <p className="text-sm text-muted dark:text-mutedLight pb-6">
           Impresions & CTR overtime
@@ -114,7 +114,7 @@ const DSPCampaignReport = () => {
           yaxis2={data.report.map((item) => item.CTR)}
         />
       </div>
-      <div className="bg-white p-6 rounded-xl mb-4">
+      <div className="bg-white p-6 space-y-1 rounded-xl mb-4">
         <h1 className="font-bold text-2xl">Clicks</h1>
         <p className="text-sm text-muted dark:text-mutedLight pb-6">
           Clicks overtime

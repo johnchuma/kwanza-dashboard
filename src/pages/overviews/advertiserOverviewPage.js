@@ -50,7 +50,7 @@ const AdvertiserOverviewPage = () => {
       <div className="flex justify-between">
         <div className="space-y-2">
           <h1 className="text-4xl font-bold">Overview</h1>
-          <p className="text-base text-muted dark:text-mutedLight">
+          <p className="text-sm text-muted dark:text-mutedLight">
             Campaigns data overview
           </p>
         </div>

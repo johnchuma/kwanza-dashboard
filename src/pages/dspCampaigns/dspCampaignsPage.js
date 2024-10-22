@@ -30,6 +30,7 @@ import {
   getDSPCampaigns,
 } from "../../controllers/dspCampaignController";
 import NoData from "../../components/noData";
+import toast from "react-hot-toast";
 
 const DSPCampaignsPage = () => {
   const navigate = useNavigate();
@@ -71,9 +72,9 @@ const DSPCampaignsPage = () => {
       {user.role != "advertiser" && <Back />}
 
       <div className="flex justify-between items-start">
-        <div className="space-y-3">
+        <div className="space-y-2">
           <h1 className="text-4xl 2xl:text-3xl font-bold">DSP Campaigns</h1>
-          <p className="text-base text-muted dark:text-mutedLight">
+          <p className="text-sm text-muted dark:text-mutedLight">
             Create DSP campaigns Below
           </p>
         </div>
@@ -143,9 +144,19 @@ const DSPCampaignsPage = () => {
 
                       <td className="text-start py-4">{item.name}</td>
                       <td className="text-start py-4">
-                        <button className="bg-primary bg-opacity-20 text-primary  p-1 px-2 rounded-lg font-semibold ">
-                          Runnable
-                        </button>
+                        {item.status == "runnable" ? (
+                          <button className="bg-primary bg-opacity-15 text-sm text-primary  p-1 px-2 rounded-lg font-semibold ">
+                            Runnable
+                          </button>
+                        ) : item.status == "draft" ? (
+                          <button className="bg-muted bg-opacity-15 text-sm text-muted  p-1 px-2 rounded-lg font-semibold ">
+                            Draft
+                          </button>
+                        ) : (
+                          <button className="bg-orange-500 bg-opacity-15 text-sm text-orange-500  p-1 px-2 rounded-lg font-semibold ">
+                            Paused
+                          </button>
+                        )}
                       </td>
                       <td className="text-start py-4">${item.budget || 0}</td>
                       <td className="text-start py-4">
@@ -163,7 +174,7 @@ const DSPCampaignsPage = () => {
                           "infinity"}
                       </td>
                       <td className="text-start py-4">
-                        {item.expireTime
+                        {item.expireDate
                           ? moment(item.expireDate).format("yyy, MMM DD")
                           : "Infinity"}
                       </td>
@@ -184,15 +195,17 @@ const DSPCampaignsPage = () => {
                                 ref={dropdownRef}
                                 className="bg-white absolute rounded-xl top-4 shadow-lg z-30 right-0 w-56 px-2 py-4"
                               >
-                                <SidebarItem
-                                  icon={<AiOutlineLineChart />}
-                                  path={`/dsp-campaign-report/?uuid=${item.uuid}`}
-                                  title={"View stats"}
-                                />
+                                {item.status != "draft" && (
+                                  <SidebarItem
+                                    icon={<AiOutlineLineChart />}
+                                    path={`/dsp-campaign-report/?uuid=${item.uuid}&name=${item.name}`}
+                                    title={"View stats"}
+                                  />
+                                )}
                                 <SidebarItem
                                   icon={<AiOutlineImport />}
                                   path={`/dsp-campaign-banners/?uuid=${item.uuid}`}
-                                  title={"Campaign Banners"}
+                                  title={"Campaign Details"}
                                 />
                                 <SidebarItem
                                   icon={<AiOutlineEdit />}
@@ -202,9 +215,10 @@ const DSPCampaignsPage = () => {
                                 <SidebarItem
                                   icon={<AiOutlineDelete />}
                                   onClick={() => {
+                                    toast.success("Deleted successfully");
+                                    setShowOptions(false);
                                     deleteDSPCampaign(item.uuid).then(
                                       (data) => {
-                                        setShowOptions(false);
                                         getData();
                                       }
                                     );

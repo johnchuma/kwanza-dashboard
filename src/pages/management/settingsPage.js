@@ -40,9 +40,9 @@ const SettingsPage = () => {
     <div>
       {/* <Back /> */}
       <div className="flex justify-between items-start">
-        <div className="space-y-3">
-          <h1 className="text-4xl 2xl:text-3xl font-bold">System Settings</h1>
-          <p className="text-base text-muted dark:text-mutedLight">
+        <div className="space-y-2">
+          <h1 className="text-4xl 2xl:text-3xl font-bold">Settings</h1>
+          <p className="text-sm text-muted dark:text-mutedLight">
             Manage system settings
           </p>
         </div>

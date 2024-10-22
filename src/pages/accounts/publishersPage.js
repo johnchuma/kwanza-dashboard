@@ -45,9 +45,9 @@ const PublishersPage = () => {
   ) : (
     <div>
       <div className="flex justify-between items-start">
-        <div className="space-y-3">
+        <div className="space-y-2">
           <h1 className="text-4xl 2xl:text-3xl font-bold">Publishers</h1>
-          <p className="text-base text-muted dark:text-mutedLight">
+          <p className="text-sm text-muted dark:text-mutedLight">
             Manage publishers Below
           </p>
         </div>
@@ -62,7 +62,7 @@ const PublishersPage = () => {
       </div>
       <div className="bg-white  dark:bg-darkLight rounded-2xl mt-4 ">
         <div className="bg-background dark:bg-darkLight rounded-t-2xl bg-opacity-40 px-6 items-center py-4 flex justify-between">
-          <h1 className="font-bold text-lg">Publishers ({count})</h1>
+          <h1 className="font-bold text-base">Publishers ({count})</h1>
           <input
             onChange={(e) => {
               setKeyword(e.target.value);
