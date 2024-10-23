@@ -22,9 +22,10 @@ const LoginPage = () => {
             }
             setLoading(true);
             const payload = {
-              email,
-              phone,
+              email: email && email.trim(),
+              phone: phone && phone.trim(),
             };
+            "".trim();
             sendCode(payload)
               .then((response) => {
                 setLoading(false);
