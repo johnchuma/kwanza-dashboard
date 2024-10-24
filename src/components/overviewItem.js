@@ -12,7 +12,7 @@ const OverviewItem = ({ icon, value, label, action, actionTitle }) => {
           </div>
           <div className="space-y-1">
             <h1 className="text-3xl 2xl:text-2xl font-semibold">{value}</h1>
-            <p className="text-muted line-clamp-1 dark:text-mutedLight text-base 2xl:text-sm">
+            <p className="text-muted line-clamp-1 dark:text-white dark:text-opacity-50 text-base 2xl:text-sm">
               {label}
             </p>
           </div>
@@ -22,7 +22,7 @@ const OverviewItem = ({ icon, value, label, action, actionTitle }) => {
             onClick={() => {
               action();
             }}
-            className="flex items-center translate-all duration-200 space-x-3 cursor-pointer text-muted dark:text-mutedLight hover:text-primary"
+            className="flex items-center translate-all duration-200 space-x-3 cursor-pointer text-muted dark:text-white dark:text-opacity-50 hover:text-primary"
           >
             <h1 className="">{actionTitle} </h1>
             <AiOutlineArrowRight />

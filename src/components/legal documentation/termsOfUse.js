@@ -1,7 +1,7 @@
 const TermsOfUse = () => {
   return (
     <div>
-      <div className="bg-white w-full min-h-screen  text-muted">
+      <div className=" w-full min-h-screen  text-muted">
         <div className="w-11/12 md:w-10/12 mx-auto space-y-3 pt-2 pb-10">
           <div className="space-y-3">
             <div className="space-y-1">

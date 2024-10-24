@@ -33,7 +33,7 @@ const AddSSPCampaignBanner = () => {
       <Back />
       <div className="space-y-2">
         <h1 className="text-4xl 2xl:text-3xl font-bold">Add new banner</h1>
-        <p className="text-base text-muted dark:text-mutedLight">
+        <p className="text-base text-muted dark:text-white dark:text-opacity-50">
           Fill the form below to add a banner
         </p>
       </div>
@@ -49,10 +49,8 @@ const AddSSPCampaignBanner = () => {
             formData.set("width", e.target.width.value);
             formData.set("height", e.target.height.value);
           }
-
           formData.set("storageType", e.target.storageType.value);
           formData.set("destinationURL", e.target.destinationURL.value);
-
           formData.set("ssp_campaign_uuid", params.uuid);
           formData.set("file", e.target.file.files[0]);
           setUploading(true);
@@ -71,7 +69,7 @@ const AddSSPCampaignBanner = () => {
       >
         <div className="space-y-1">
           <h1 className="text-lg font-bold">Add new banner </h1>
-          <p className="text-base text-muted dark:text-mutedLight">
+          <p className="text-base text-muted dark:text-white dark:text-opacity-50">
             All fields are required
           </p>
         </div>

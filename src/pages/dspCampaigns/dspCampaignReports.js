@@ -64,7 +64,7 @@ const DSPCampaignReport = () => {
       <div className="flex justify-between items-start">
         <div className="space-y-2">
           <h1 className="text-4xl 2xl:text-3xl font-bold">{params.name}</h1>
-          <p className="text-sm text-muted dark:text-mutedLight">
+          <p className="text-sm text-muted dark:text-white dark:text-opacity-50">
             View {params.name} stats
           </p>
         </div>
@@ -102,7 +102,7 @@ const DSPCampaignReport = () => {
       </div>
       <div className="bg-white p-6 space-y-1 rounded-xl mb-4">
         <h1 className="font-bold text-2xl">Impressions & CTR</h1>
-        <p className="text-sm text-muted dark:text-mutedLight pb-6">
+        <p className="text-sm text-muted dark:text-white dark:text-opacity-50 pb-6">
           Impresions & CTR overtime
         </p>
         <DoubleTimeseriesChart
@@ -114,9 +114,9 @@ const DSPCampaignReport = () => {
           yaxis2={data.report.map((item) => item.CTR)}
         />
       </div>
-      <div className="bg-white p-6 space-y-1 rounded-xl mb-4">
+      <div className="bg-white  p-6 space-y-1 rounded-xl mb-4">
         <h1 className="font-bold text-2xl">Clicks</h1>
-        <p className="text-sm text-muted dark:text-mutedLight pb-6">
+        <p className="text-sm text-muted dark:text-white dark:text-opacity-50 pb-6">
           Clicks overtime
         </p>
         <TimeseriesChart

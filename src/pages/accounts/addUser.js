@@ -24,7 +24,7 @@ const AddUser = () => {
         <h1 className="text-4xl 2xl:text-3xl font-bold">
           New {role || "User"}
         </h1>
-        <p className="text-base text-muted dark:text-mutedLight">
+        <p className="text-base text-muted dark:text-white dark:text-opacity-50">
           Enter {role || "User"} details below
         </p>
       </div>
@@ -56,7 +56,7 @@ const AddUser = () => {
           <h1 className="text-lg font-bold">
             Register new {role || "User"} here
           </h1>
-          <p className="text-base text-muted dark:text-mutedLight">
+          <p className="text-base text-muted dark:text-white dark:text-opacity-50">
             All fields are required
           </p>
         </div>

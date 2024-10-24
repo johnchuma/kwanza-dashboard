@@ -36,7 +36,7 @@ const PublisherRevenueReport = () => {
     <div>
       <div className="space-y-2">
         <h1 className="text-4xl font-bold">Revenue Report</h1>
-        <p className="text-base text-muted dark:text-mutedLight">
+        <p className="text-base text-muted dark:text-white dark:text-opacity-50">
           Daily usage and engagement data
         </p>
       </div>
@@ -75,7 +75,7 @@ const PublisherRevenueReport = () => {
         <div className="w-8/12 h-full">
           <div className="bg-white py-6 rounded-xl  p-5">
             <h1 className="font-bold text-2xl">Revenue Trend</h1>
-            <p className="text-sm text-muted dark:text-mutedLight">
+            <p className="text-sm text-muted dark:text-white dark:text-opacity-50">
               Revenue earnings trends
             </p>
             <TimeseriesChart
@@ -88,7 +88,7 @@ const PublisherRevenueReport = () => {
 
         <div className="bg-white py-6    w-4/12 rounded-xl p-5">
           <h1 className="font-bold text-2xl">Zones Distribution</h1>
-          <p className="text-sm text-muted dark:text-mutedLight">
+          <p className="text-sm text-muted dark:text-white dark:text-opacity-50">
             Zones revenue distribution
           </p>
 

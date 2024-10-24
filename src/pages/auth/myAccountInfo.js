@@ -15,7 +15,7 @@ const MyAccountInfo = () => {
       <Back />
       <div className="space-y-2">
         <h1 className="text-4xl 2xl:text-3xl font-bold">Account Details</h1>
-        <p className="text-base text-muted dark:text-mutedLight">
+        <p className="text-base text-muted dark:text-white dark:text-opacity-50">
           View and edit you account below
         </p>
       </div>
@@ -41,7 +41,7 @@ const MyAccountInfo = () => {
       >
         <div className="space-y-1">
           <h1 className="text-lg font-bold">Manage your account Details</h1>
-          <p className="text-base text-muted dark:text-mutedLight">
+          <p className="text-base text-muted dark:text-white dark:text-opacity-50">
             All fields are required
           </p>
         </div>

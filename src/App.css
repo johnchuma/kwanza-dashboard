@@ -44,9 +44,12 @@ a{
   @apply text-primary active:text-primary
 }
 .input-style {
-  @apply w-full border-muted dark:bg-black dark:bg-opacity-10 border-opacity-30 focus:border-primary focus:ring-primary rounded-lg
+  @apply w-full border-muted dark:bg-black dark:bg-opacity-30 dark:placeholder:dark:text-white dark:placeholder:text-opacity-60 border-opacity-30 focus:border-primary focus:ring-primary rounded-lg
 }
 
 .search-style {
-  @apply border-muted dark:bg-black dark:bg-opacity-10 border-opacity-10 focus:border-primary focus:ring-primary rounded-xl
+  @apply border-muted 2xl:text-sm dark:bg-black dark:placeholder:dark:text-white dark:placeholder:text-opacity-60  dark:bg-opacity-10 border-opacity-10 focus:border-primary focus:ring-primary rounded-xl
+}
+.popup-style {
+  @apply bg-white dark:bg-darkLight dark:text-white absolute rounded-xl top-4 shadow-lg z-30 right-0 w-56 px-2 py-4
 }

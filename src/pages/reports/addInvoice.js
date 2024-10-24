@@ -24,7 +24,7 @@ const AddInvoice = () => {
       <Back />
       <div className="space-y-2">
         <h1 className="text-4xl 2xl:text-3xl font-bold">Send Invoice</h1>
-        <p className="text-base text-muted dark:text-mutedLight">
+        <p className="text-base text-muted dark:text-white dark:text-opacity-50">
           Enter payment details below
         </p>
       </div>
@@ -56,7 +56,7 @@ const AddInvoice = () => {
       >
         <div className="space-y-1">
           <h1 className="text-lg font-bold">Payment Request</h1>
-          <p className="text-base text-muted dark:text-mutedLight">
+          <p className="text-base text-muted dark:text-white dark:text-opacity-50">
             All fields are required
           </p>
         </div>

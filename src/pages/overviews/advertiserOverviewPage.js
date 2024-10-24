@@ -50,7 +50,7 @@ const AdvertiserOverviewPage = () => {
       <div className="flex justify-between">
         <div className="space-y-2">
           <h1 className="text-4xl font-bold">Overview</h1>
-          <p className="text-sm text-muted dark:text-mutedLight">
+          <p className="text-sm text-muted dark:text-white dark:text-opacity-50">
             Campaigns data overview
           </p>
         </div>
@@ -131,7 +131,7 @@ const AdvertiserOverviewPage = () => {
         <div className="w-8/12 bg-white dark:bg-darkLight py-8 rounded-xl  p-5">
           <div className="">
             <h1 className="font-bold text-2xl">Campaign Reports</h1>
-            <p className="text-sm text-muted dark:text-mutedLight">
+            <p className="text-sm text-muted dark:text-white dark:text-opacity-50">
               Comparison of campaigns impressions
             </p>
             <GroupedBarChart
@@ -146,7 +146,7 @@ const AdvertiserOverviewPage = () => {
         </div>
         <div className="w-4/12 bg-white dark:bg-darkLight py-8 rounded-xl  p-5">
           <h1 className="font-bold text-2xl">Campaigns Spents</h1>
-          <p className="text-sm text-muted dark:text-mutedLight">
+          <p className="text-sm text-muted dark:text-white dark:text-opacity-50">
             Campaign Spents comparison
           </p>
           <div className="mt-6">

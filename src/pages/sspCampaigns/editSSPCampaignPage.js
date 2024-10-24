@@ -4,27 +4,31 @@ import TextForm from "../../components/textForm";
 import { showError } from "../../utils/showError";
 import toast from "react-hot-toast";
 import SelectForm from "../../components/selectForm";
-import { useNavigate, useSearchParams } from "react-router-dom";
-import { registerUser } from "../../controllers/userController";
-import { AiOutlineArrowLeft } from "react-icons/ai";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import Back from "../../components/back";
 import { useGetParams } from "../../utils/getParams";
 import { getWebsiteCategories } from "../../controllers/websiteCategoriesController";
-import { addSSPCampaign } from "../../controllers/sspCampaignController";
+import {
+  editSSPCampaign,
+  getSSPCampaign,
+} from "../../controllers/sspCampaignController";
 import moment from "moment";
+import Loader from "../../components/loader";
 
-const AddSSPCampaign = () => {
+const EditSSPCampaign = () => {
   const [uploading, setUploading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
-  const params = useGetParams();
+  const params = useParams();
   const [categories, setCategories] = useState([]);
   const [selectedType, setSelectedType] = useState(null);
   const [campaignTitle, setCampaignTitle] = useState(null);
   const [selectedRevenue, setSelectedRevenue] = useState(null);
-  const [impression, setImpression] = useState(0);
-  const [click, setClick] = useState(0);
+  const [impression, setImpression] = useState(null);
+  const [click, setClick] = useState(null);
   const [budget, setBudget] = useState(0);
   const [isPremium, setIsPremium] = useState(1);
+  const [campaign, setCampaign] = useState(null);
 
   useEffect(() => {
     var estimatedImpressions = () => {
@@ -41,17 +45,35 @@ const AddSSPCampaign = () => {
     setClick(estimatedClicks);
   }, [budget, isPremium]);
   useEffect(() => {
-    getWebsiteCategories().then((response) => {
-      setCategories(response.data.body);
-    });
+    findData();
   }, []);
-  return (
+  const findData = () => {
+    setLoading(true);
+    console.log(params.uuid);
+    getSSPCampaign(params.uuid).then((res) => {
+      console.log(res.data.body);
+      const campaign = res.data.body;
+      setCampaign(campaign);
+      setClick(campaign.targetClick);
+      setImpression(campaign.targetImpression);
+      console.log(campaign.revenue.toFixed(1));
+      campaign.revenue.toFixed(1) == 2 ? setIsPremium(1) : setIsPremium(0);
+      getWebsiteCategories().then((response) => {
+        setCategories(response.data.body);
+        setLoading(false);
+      });
+    });
+  };
+  useEffect(() => {}, []);
+  return loading ? (
+    <Loader />
+  ) : (
     <div>
       <Back />
       <div className="space-y-2">
-        <h1 className="text-4xl 2xl:text-3xl font-bold">New campaign</h1>
+        <h1 className="text-4xl 2xl:text-3xl font-bold">{campaign.name}</h1>
         <p className="text-base text-muted dark:text-white dark:text-opacity-50">
-          Enter campaign details below
+          Edit campaign details below
         </p>
       </div>
       <form
@@ -60,7 +82,6 @@ const AddSSPCampaign = () => {
           const impression = e.target.targetImpression.value;
           const click = selectedRevenue == 1 ? e.target.targetClick.value : 0;
           const budget = e.target.revenue.value;
-          console.log(e.target.name.value);
           const payload = {
             name: e.target.name.value,
             type: e.target.type.value,
@@ -75,16 +96,11 @@ const AddSSPCampaign = () => {
           };
           console.log(payload);
           setUploading(true);
-          addSSPCampaign(payload)
+          editSSPCampaign(campaign.uuid, payload)
             .then((response) => {
               toast.success("added successfully");
               console.log(response.data.body);
               navigate(-1);
-              setTimeout(() => {
-                navigate(
-                  `/ssp-campaign-banners/?uuid=${response.data.body.uuid}`
-                );
-              }, 50);
             })
             .catch((err) => {
               setUploading(false);
@@ -106,6 +122,7 @@ const AddSSPCampaign = () => {
               <TextForm
                 placeholder={"Enter campaign name"}
                 name={"name"}
+                defaultValue={campaign.name}
                 label={"Campaign name"}
               />
               <div className="space-y-2">
@@ -114,6 +131,7 @@ const AddSSPCampaign = () => {
                 </p>
                 <select
                   name={""}
+                  defaultValue={isPremium}
                   onChange={(e) => {
                     setIsPremium(parseInt(e.target.value));
                   }}
@@ -163,6 +181,8 @@ const AddSSPCampaign = () => {
                             }}
                             type="radio"
                             value={item.type}
+                            defaultChecked={item.type == campaign.type}
+                            defaultValue={campaign.type}
                             className=" cursor-pointer border-primary checked:bg-primary checked:focus:bg-primary focus:ring-primary focus:border-primary"
                             name="type"
                           />
@@ -182,7 +202,7 @@ const AddSSPCampaign = () => {
           </div>
         </div>
         {/* Campaign date */}
-        {selectedType && (
+        {
           <div className="bg-white dark:bg-darkLight py-6 rounded-xl mt-2 px-8">
             <div className="">
               <div className="space-y-1">
@@ -195,13 +215,16 @@ const AddSSPCampaign = () => {
                 <TextForm
                   placeholder={""}
                   name={"activateTime"}
-                  defaultValue={moment(Date.now()).format("yyy-MM-DD")}
+                  defaultValue={moment(campaign.activateTime).format(
+                    "yyy-MM-DD"
+                  )}
                   inputType={"date"}
                   label={"Start Date (Default: Immediately)"}
                 />
                 <TextForm
                   placeholder={""}
                   required={false}
+                  defaultValue={moment(campaign.expireTime).format("yyy-MM-DD")}
                   name={"expireTime"}
                   inputType={"date"}
                   label={"End Date (Default: Infinitly)"}
@@ -209,9 +232,9 @@ const AddSSPCampaign = () => {
               </div>
             </div>
           </div>
-        )}
+        }
         {/* Pricing */}
-        {selectedType && (
+        {
           <div className="bg-white dark:bg-darkLight py-6 rounded-xl mt-2 px-8">
             <div className="">
               <div className="space-y-1">
@@ -245,6 +268,7 @@ const AddSSPCampaign = () => {
                               }}
                               type="radio"
                               value={item.type}
+                              defaultChecked={item.type == campaign.revenueType}
                               className=" cursor-pointer border-primary checked:bg-primary checked:focus:bg-primary focus:ring-primary focus:border-primary"
                               name="revenueType"
                             />
@@ -260,7 +284,7 @@ const AddSSPCampaign = () => {
                     })}
                   </div>
                 </div>
-                {selectedRevenue && (
+                {
                   <div className="space-y-2">
                     <p className="text-muted dark:text-white dark:text-opacity-50">
                       Budget
@@ -269,6 +293,9 @@ const AddSSPCampaign = () => {
                       className="input-style"
                       placeholder={"Enter your budget"}
                       name={"revenue"}
+                      defaultValue={
+                        (campaign.revenue * campaign.targetImpression) / 1000
+                      }
                       required
                       onChange={(e) => {
                         setBudget(e.target.value);
@@ -281,12 +308,12 @@ const AddSSPCampaign = () => {
                       }) `}
                     />
                   </div>
-                )}
+                }
               </div>
             </div>
           </div>
-        )}
-        {selectedRevenue && (
+        }
+        {
           <div>
             <div className="bg-white dark:bg-darkLight py-6 rounded-xl mt-2 px-8">
               <div className="">
@@ -309,30 +336,28 @@ const AddSSPCampaign = () => {
                     placeholder={"Enter target impression"}
                     name={"targetImpression"}
                     value={impression}
-                    inputType={""}
+                    inputType={"number"}
                     disabled={true}
                     label={"Estimated Impression"}
                   />
 
-                  {selectedRevenue == 1 && (
-                    <TextForm
-                      placeholder={"Enter target click"}
-                      name={"targetClick"}
-                      value={click}
-                      disabled={true}
-                      inputType={"number"}
-                      label={"Estimated Clicks"}
-                    />
-                  )}
+                  <TextForm
+                    placeholder={"Enter target click"}
+                    name={"targetClick"}
+                    value={click}
+                    disabled={true}
+                    inputType={"number"}
+                    label={"Estimated Clicks"}
+                  />
                 </div>
               </div>
             </div>
-            <SubmitButton loading={uploading} text={"Create campaign"} />
+            <SubmitButton loading={uploading} text={"Save Changes"} />
           </div>
-        )}
+        }
       </form>
     </div>
   );
 };
 
-export default AddSSPCampaign;
+export default EditSSPCampaign;

@@ -2,7 +2,7 @@ const Pagination = ({ page, limit, count, setPage }) => {
   return (
     <div className="flex justify-between items-start pt-4">
       {/* Showing results */}
-      <div className="flex space-x-2 text-muted dark:text-mutedLight">
+      <div className="flex space-x-2 text-muted dark:text-white dark:text-opacity-50">
         Showing {(page - 1) * limit + 1} to {Math.min(page * limit, count)} of{" "}
         {count} results
       </div>

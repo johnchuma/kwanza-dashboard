@@ -1,14 +1,20 @@
 import { useEffect, useRef, useState } from "react";
-
+import SubmitButton from "../../components/submitButton";
+import TextForm from "../../components/textForm";
+import { showError } from "../../utils/showError";
 import toast from "react-hot-toast";
+import SelectForm from "../../components/selectForm";
 import { useNavigate } from "react-router-dom";
 import Back from "../../components/back";
 import { useGetParams } from "../../utils/getParams";
+import { getWebsiteCategories } from "../../controllers/websiteCategoriesController";
+
 import {
-  deleteSSPCampaignBanner,
-  getSspCampaignBanners,
-} from "../../controllers/sspBannersController";
-import { AiOutlineDelete } from "react-icons/ai";
+  AiOutlineDelete,
+  AiOutlineEdit,
+  AiOutlinePlus,
+  AiOutlineQuestion,
+} from "react-icons/ai";
 import NoData from "../../components/noData";
 import SidebarItem from "../../components/sidebarItem";
 import { closePopupMenu } from "../../utils/closePopupMenu";
@@ -16,9 +22,21 @@ import { HiDotsVertical } from "react-icons/hi";
 import { BiRectangle } from "react-icons/bi";
 import Loader from "../../components/loader";
 
+import moment from "moment";
+import {
+  editSSPCampaign,
+  getSSPCampaign,
+} from "../../controllers/sspCampaignController";
+import {
+  deleteSSPCampaignBanner,
+  getSspCampaignBanners,
+} from "../../controllers/sspBannersController";
+
 const SSPCampaignBanners = () => {
+  const [uploading, setUploading] = useState(false);
   const navigate = useNavigate();
   const params = useGetParams();
+  const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState([]);
   const [limit, setLimit] = useState(5);
@@ -29,6 +47,7 @@ const SSPCampaignBanners = () => {
   const [showOptions, setShowOptions] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
   const dropdownRef = useRef(null);
+  const [campaign, setCampaign] = useState(null);
 
   useEffect(() => {
     closePopupMenu(dropdownRef, () => {
@@ -38,6 +57,7 @@ const SSPCampaignBanners = () => {
   useEffect(() => {
     fetchData();
   }, []);
+
   const fetchData = () => {
     let path = `${params.uuid}/?limit=${limit}&page=${page}&keyword=${keyword}`;
     getSspCampaignBanners(path).then((response) => {
@@ -46,7 +66,12 @@ const SSPCampaignBanners = () => {
       const count = response.data.body.count;
       setData(rows);
       setCount(count);
-      setLoading(false);
+      console.log(params.uuid);
+      getSSPCampaign(params.uuid).then((res) => {
+        setCampaign(res.data.body);
+        console.log(res.data.body);
+        setLoading(false);
+      });
     });
   };
   return loading ? (
@@ -57,55 +82,223 @@ const SSPCampaignBanners = () => {
 
       <div className="flex justify-between items-start">
         <div className="space-y-2">
-          <h1 className="text-4xl 2xl:text-3xl font-bold">Campaign Banners</h1>
-          <p className="text-base text-muted dark:text-mutedLight">
-            Campaign Banners
+          <h1 className="text-4xl 2xl:text-3xl font-bold">{campaign.name}</h1>
+          <p className=" text-muted text-sm dark:text-white dark:text-opacity-50">
+            View campaign preview and linked banners
           </p>
         </div>
-        <button
-          onClick={() => {
-            navigate(`/add-ssp-campaign-banner/?uuid=${params.uuid}`);
-          }}
-          className="py-2 px-6 font-semibold rounded-lg bg-primary text-white"
-        >
-          Add New Banner
-        </button>
+      </div>
+      <div className="bg-white dark:bg-darkLight p-8  rounded-lg mt-4">
+        <div className="flex justify-between items-center mb-6">
+          <h1 className=" text-xl ">Campaign details</h1>
+          <div
+            onClick={() => {
+              navigate(`/edit-ssp-campaign/${campaign.uuid}`);
+            }}
+            className="flex space-x-2 text-muted dark:text-white dark:text-opacity-50 hover:text-primary cursor-pointer transition-all  items-center"
+          >
+            <AiOutlineEdit />
+            <p>Edit</p>
+          </div>
+        </div>
+        {[
+          { title: "Created", value: moment(campaign.createdAt).fromNow() },
+
+          { title: "Campaign name", value: campaign.name },
+          {
+            title: "Budget",
+            value: `$${(campaign.revenue * campaign.targetImpression) / 1000}`,
+          },
+          {
+            title: "Campaign Type",
+            value: campaign.type == 0 ? "Remnant" : "Contract",
+          },
+          {
+            title: "Revenue Type",
+            value: campaign.revenueType == 0 ? "CPM" : "CPC",
+          },
+          { title: "Estimated Impression", value: campaign.targetImpression },
+          { title: "Estimated Click", value: campaign.targetClick },
+          // { title: "Audience", value: campaign.Audience.name },
+
+          {
+            title: "Activate Time",
+            value: moment(campaign.activateTime).format("yyy, MMM DD"),
+          },
+          {
+            title: "Expire Time",
+            value: moment(campaign.expireTime).format("yyy, MMM DD"),
+          },
+        ].map((item) => {
+          return (
+            <div className="flex border-b border-slate-200 dark:border-white dark:border-opacity-20 py-2">
+              <div className="w-4/12 text-sm text-muted dark:text-white dark:text-opacity-50">
+                {item.title}:
+              </div>
+              <div className="w-4/12">{item.value}</div>
+            </div>
+          );
+        })}
+        <div className="flex border-b border-slate-200 dark:border-white dark:border-opacity-20 py-2">
+          <div className="w-4/12 text-sm text-muted dark:text-white dark:text-opacity-50">
+            status:
+          </div>
+          <div className="w-4/12">
+            {campaign.status == "draft" ? (
+              <button className="bg-background capitalize px-6 py-1 text-sm rounded-full font-bold text-muted">
+                {campaign.status}
+              </button>
+            ) : campaign.status == "runnable" ? (
+              <button className="bg-primary bg-opacity-15  capitalize px-6 py-1 text-sm rounded-full font-bold text-primary">
+                {campaign.status}
+              </button>
+            ) : (
+              <button className="bg-orange-400 bg-opacity-15  capitalize px-6 py-1 text-sm rounded-full font-bold text-orange-600">
+                {campaign.status}
+              </button>
+            )}
+          </div>
+        </div>
+        {campaign.status == "draft" && (
+          <div>
+            <p className="text-muted text-sm mt-8">
+              Your campaign is not active yet, press button below to activate*
+            </p>
+            <button
+              onClick={() => {
+                if (data.length > 0) {
+                  editSSPCampaign(campaign.uuid, { status: "runnable" }).then(
+                    (res) => {
+                      toast.success("Activated successfully");
+                      fetchData();
+                    }
+                  );
+                } else {
+                  toast.error(
+                    "Please upload at least one banner before  activating"
+                  );
+                }
+              }}
+              className="bg-primary text-white px-6 py-2 text-sm rounded-lg   mt-2 font-bold "
+            >
+              Activate Campaign
+            </button>
+          </div>
+        )}
+        {campaign.status == "runnable" ? (
+          <button
+            onClick={() => {
+              if (data.length > 0) {
+                editSSPCampaign(campaign.uuid, { status: "paused" }).then(
+                  (res) => {
+                    fetchData();
+                    toast.success("Paused successfully");
+                  }
+                );
+              } else {
+                toast.error(
+                  "Please upload at least one banner before  activating"
+                );
+              }
+            }}
+            className="bg-orange-400 bg-opacity-20 text-orange-500 px-6 py-2 text-sm rounded-lg   mt-2 font-bold "
+          >
+            Pause Campaign
+          </button>
+        ) : (
+          campaign.status == "paused" && (
+            <button
+              onClick={() => {
+                if (data.length > 0) {
+                  editSSPCampaign(campaign.uuid, { status: "runnable" }).then(
+                    (res) => {
+                      fetchData();
+                      toast.success("Activated successfully");
+                    }
+                  );
+                } else {
+                  toast.error(
+                    "Please upload at least one banner before activating"
+                  );
+                }
+              }}
+              className="bg-primary text-white px-6 py-2 text-sm rounded-lg   mt-2 font-bold "
+            >
+              Activate Campaign
+            </button>
+          )
+        )}
       </div>
       <div>
-        {data.length == 0 && (
+        {data.length == 0 ? (
           <NoData
+            action={
+              <button
+                onClick={() => {
+                  navigate(
+                    `/add-campaign-banner/?uuid=${params.uuid}&type=ssp`
+                  );
+                }}
+                className="py-2 px-6 font-semibold rounded-lg bg-primary  text-sm text-white"
+              >
+                Add New Banner
+              </button>
+            }
             title={"No Linked banners"}
             description={"Your banners will appear here when availbale"}
           />
-        )}
-        <div className="grid grid-cols-1">
-          {data.map((item) => {
-            return (
-              <div className="bg-white rounded-xl space-x-12 items-center flex px-8 py-6 mt-4">
-                <div className="w-2/12">
-                  {item.storageType == "web" ? (
-                    <img className="rounded-2xl" src={item.url} />
-                  ) : (
-                    <iframe
-                      className="w-full rounded-2xl"
-                      src={item.url}
-                    ></iframe>
-                  )}
-                </div>
-                <div className="w-6/12">
-                  <h1 className="text-lg 2xl:text-base">
-                    Dimensions: {item.width}x{item.height}
-                  </h1>
-                  <h1 className="flex space-x-1 text-base 2xl:text-sm text-muted dark:text-mutedLight">
-                    <div className="">Destination URL:</div>{" "}
-                    <span>{item.destinationURL}</span>{" "}
-                  </h1>
-                  <h1 className="flex space-x-1 text-base 2xl:text-sm text-muted dark:text-mutedLight">
-                    <div className="">Linked Zones:</div>{" "}
-                    <span>{item.linkedZonesCount}</span>{" "}
-                  </h1>
+        ) : (
+          <div className=" py-6 rounded-xl mt-4 ">
+            <div className="flex justify-between items-center mb-3">
+              <h1 className=" text-xl font-semibold ">Campaign banners</h1>
+              {campaign.status == "draft" && (
+                <button
+                  onClick={() => {
+                    navigate(
+                      `/add-campaign-banner/?uuid=${params.uuid}&type=ssp`
+                    );
+                  }}
+                  className="py-2 px-6 font-semibold rounded-lg bg-primary  text-sm text-white"
+                >
+                  Add New Banner
+                </button>
+              )}
+            </div>
+            <div className="grid grid-cols-1 bg-white dark:bg-darkLight p-6 rounded-xl">
+              {data.map((item) => {
+                return (
+                  <div className="  space-x-12 items-center flex   mt-2">
+                    <div className="w-1/12">
+                      {item.storageType == "web" ? (
+                        <img className="rounded-xl" src={item.url} />
+                      ) : (
+                        <iframe
+                          className="w-full rounded-xl"
+                          src={item.url}
+                        ></iframe>
+                      )}
+                    </div>
+                    <div className="w-10/12 space-y-1">
+                      <h1 className="text-lg 2xl:text-base">
+                        Dimensions: {item.width}x{item.height}
+                      </h1>
+                      <h1 className="flex space-x-1  text-base 2xl:text-sm text-muted dark:text-white dark:text-opacity-50">
+                        <div className="">Destination URL:</div>{" "}
+                        <span>{item.destinationURL}</span>{" "}
+                      </h1>
+                      <h1
+                        onClick={() => {
+                          navigate(
+                            `/link-banner-with-zones/?uuid=${item.uuid}`
+                          );
+                        }}
+                        className="flex space-x-1 hover:text-primary cursor-pointer  text-base 2xl:text-sm text-muted dark:text-white dark:text-opacity-50"
+                      >
+                        <div className="">Linked Zones:</div>{" "}
+                        <span>{item.linkedZonesCount}</span>{" "}
+                      </h1>
 
-                  {/* <button
+                      {/* <button
                     onClick={() => {
                       navigate(`/link-banner-with-zones/?uuid=${item.uuid}`);
                     }}
@@ -113,52 +306,34 @@ const SSPCampaignBanners = () => {
                   >
                     Link Zone
                   </button> */}
-                </div>
-                <div className="w-4/12 flex justify-end">
-                  {" "}
-                  <div className="relative">
-                    <HiDotsVertical
-                      className=" cursor-pointer"
-                      onClick={() => {
-                        if (showOptions == false) {
-                          setSelectedItem(item);
-                          setShowOptions(!showOptions);
-                        }
-                      }}
-                    />
-                    {showOptions == true && selectedItem.uuid == item.uuid && (
-                      <div
-                        ref={dropdownRef}
-                        className="bg-white absolute rounded-xl  top-4 shadow-lg z-30 right-0 w-52 px-2 py-4"
-                      >
-                        <SidebarItem
-                          icon={<BiRectangle />}
-                          path={`/link-banner-with-zones/?uuid=${item.uuid}`}
-                          title={"Zones"}
-                        />
-                        <SidebarItem
-                          icon={<AiOutlineDelete />}
-                          onClick={() => {
-                            deleteSSPCampaignBanner(item.uuid).then(
-                              (response) => {
-                                setShowOptions(false);
-                                setSelectedItem(null);
-                                toast.success("Deleted Succesfully");
-                                fetchData();
-                              }
-                            );
-                          }}
-                          path={`/websites`}
-                          title={"Delete Banner"}
-                        />
-                      </div>
-                    )}
+                    </div>
+                    <div className="w-1/12  flex justify-end">
+                      {" "}
+                      {campaign.status == "draft" && (
+                        <div className="relative">
+                          <AiOutlineDelete
+                            className=" cursor-pointer text-2xl hover:text-red-500 transition-all duration-300"
+                            onClick={() => {
+                              deleteSSPCampaignBanner(item.uuid).then(
+                                (response) => {
+                                  console.log(response);
+                                  setShowOptions(false);
+                                  setSelectedItem(null);
+                                  toast.success("Deleted Succesfully");
+                                  fetchData();
+                                }
+                              );
+                            }}
+                          />
+                        </div>
+                      )}
+                    </div>
                   </div>
-                </div>
-              </div>
-            );
-          })}
-        </div>
+                );
+              })}
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

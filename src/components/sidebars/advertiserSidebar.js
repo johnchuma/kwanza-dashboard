@@ -41,7 +41,7 @@ const AdvertiserSidebar = () => {
           />
         </div>
         <div className="pt-5">
-          <h1 className="font-bold text-xs text-muted dark:text-mutedLight dark:text-white dark:text-opacity-80 mb-2">
+          <h1 className="font-bold text-xs text-muted dark:text-white dark:text-opacity-50 dark:text-white dark:text-opacity-80 mb-2">
             CAMPAIGNS
           </h1>
           <SidebarItem
@@ -62,7 +62,7 @@ const AdvertiserSidebar = () => {
         </div>
 
         <div className="pt-5">
-          <h1 className="font-bold text-xs text-muted dark:text-mutedLight dark:text-white dark:text-opacity-80 mb-2">
+          <h1 className="font-bold text-xs text-muted dark:text-white dark:text-opacity-50 dark:text-white dark:text-opacity-80 mb-2">
             OTHERS
           </h1>
           <SidebarItem

@@ -22,10 +22,8 @@ import AddWebsiteCategory from "./pages/management/addWebsiteCategory";
 import AddWebsite from "./pages/sspCampaigns/addWebsite";
 import AddZone from "./pages/sspCampaigns/addZone";
 import SSPCampaignsPage from "./pages/sspCampaigns/sspCampaignsPage";
-import AddSSPCampaignPage from "./pages/sspCampaigns/addSSPCampaignPage";
 import AddSSPCampaign from "./pages/sspCampaigns/addSSPCampaignPage";
 import SSPCampaignBanners from "./pages/sspCampaigns/sspCampaignBanners";
-import AddSSPCampaignBanner from "./pages/sspCampaigns/addSSPCampaignBanner";
 import LinkBannerWithZones from "./pages/sspCampaigns/linkBannerWithZones";
 import LogsPage from "./pages/management/logsPage";
 import AdminRevenueReport from "./pages/reports/adminRevenueReport";
@@ -50,6 +48,8 @@ import AdvertiserPaymentReport from "./pages/others/advertiserPaymentReports";
 import AdvertiserOverviewPage from "./pages/overviews/advertiserOverviewPage";
 import AgencyAdvertisersReport from "./pages/reports/agencyAdvertisersReport";
 import EditDSPCampaign from "./pages/dspCampaigns/editDSPCampaign";
+import EditSSPCampaign from "./pages/sspCampaigns/editSSPCampaignPage";
+import BannersUploadingForm from "./components/bannersUploadingForm";
 
 function App() {
   return (
@@ -130,17 +130,14 @@ function App() {
               path="/ssp-campaign-report"
               element={<SSPCampaignReport />}
             />
-            <Route
-              path="/add-ssp-campaign-banner"
-              element={<AddSSPCampaignBanner />}
-            />
+
             <Route
               path="/agency-advertisers-report"
               element={<AgencyAdvertisersReport />}
             />
             <Route
-              path="/add-dsp-campaign-banner"
-              element={<AddDSPCampaignBanner />}
+              path="/add-campaign-banner"
+              element={<BannersUploadingForm />}
             />
             <Route path="/planning" element={<PlanningPage />} />
             <Route
@@ -156,6 +153,10 @@ function App() {
             <Route
               path="/edit-dsp-campaign/:uuid"
               element={<EditDSPCampaign />}
+            />
+            <Route
+              path="/edit-ssp-campaign/:uuid"
+              element={<EditSSPCampaign />}
             />
             <Route path="/agency/:uuid/users" element={<AgencyUsersPage />} />
             <Route path="/agency/advertisers" element={<AdvertisersPage />} />

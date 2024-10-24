@@ -15,12 +15,14 @@ const SidebarItem = ({ title, icon, path, onClick }) => {
       }}
       className={`flex space-x-3 rounded-lg px-4 items-center py-[10px] w-full ${
         pathname == path &&
-        " bg-activeBackground  dark:bg-darkLight hover:bg-opacity-75"
-      } hover:bg-lightBackground dark:hover:bg-darkLight  transition-all duration-200`}
+        " bg-activeBackground  dark:bg-black dark:bg-opacity-30 hover:bg-opacity-75"
+      } hover:bg-lightBackground dark:hover:bg-black dark:hover:bg-opacity-30   transition-all duration-200`}
     >
       <div
         className={`text-xl   ${
-          pathname == path ? "text-primary" : " text-muted dark:text-mutedLight"
+          pathname == path
+            ? "text-primary"
+            : " text-muted dark:text-white dark:text-opacity-50"
         }`}
       >
         {icon}
@@ -29,7 +31,7 @@ const SidebarItem = ({ title, icon, path, onClick }) => {
         className={`font-semibold text-base ${
           pathname == path
             ? "text-dark dark:text-white"
-            : " text-muted dark:text-mutedLight  dark:text-opacity-75"
+            : " text-muted dark:text-white dark:text-opacity-50  dark:text-opacity-75"
         } `}
       >
         {title}

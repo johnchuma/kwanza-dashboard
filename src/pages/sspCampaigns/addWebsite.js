@@ -27,7 +27,7 @@ const AddWebsite = () => {
       <Back />
       <div className="space-y-2">
         <h1 className="text-4xl 2xl:text-3xl font-bold">New Website</h1>
-        <p className="text-base text-muted dark:text-mutedLight">
+        <p className="text-base text-muted dark:text-white dark:text-opacity-50">
           Enter website details below
         </p>
       </div>
@@ -57,7 +57,7 @@ const AddWebsite = () => {
       >
         <div className="space-y-1">
           <h1 className="text-lg font-bold">Add website </h1>
-          <p className="text-base text-muted dark:text-mutedLight">
+          <p className="text-base text-muted dark:text-white dark:text-opacity-50">
             All fields are required
           </p>
         </div>

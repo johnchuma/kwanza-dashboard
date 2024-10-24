@@ -34,7 +34,7 @@ const AdminOverviewPage = () => {
       <div className="flex justify-between">
         <div className="space-y-2">
           <h1 className="text-4xl font-bold">Overview</h1>
-          <p className="text-sm text-muted dark:text-mutedLight">
+          <p className="text-sm text-muted dark:text-white dark:text-opacity-50">
             Daily usage and engagement data
           </p>
         </div>
@@ -63,7 +63,7 @@ const AdminOverviewPage = () => {
               className={`${
                 activeTab == index
                   ? "font-bold text-primary border-primary "
-                  : "border-transparent text-muted dark:text-mutedLight"
+                  : "border-transparent text-muted dark:text-white dark:text-opacity-50"
               } border-b-2 pb-2 cursor-pointer `}
             >
               {item}
@@ -106,7 +106,7 @@ const AdminOverviewPage = () => {
         <div className="w-8/12 bg-white py-8 rounded-xl  p-5">
           <div className="">
             <h1 className="font-bold text-2xl">Usage Trend</h1>
-            <p className="text-sm text-muted dark:text-mutedLight">
+            <p className="text-sm text-muted dark:text-white dark:text-opacity-50">
               Daily users sessions overtime
             </p>
             <TimeseriesChart
@@ -118,7 +118,7 @@ const AdminOverviewPage = () => {
         </div>
         <div className="w-4/12 bg-white py-8 rounded-xl  p-5">
           <h1 className="font-bold text-2xl">Users Distribution</h1>
-          <p className="text-sm text-muted dark:text-mutedLight">
+          <p className="text-sm text-muted dark:text-white dark:text-opacity-50">
             System users distribution
           </p>
           <div className="mt-2">

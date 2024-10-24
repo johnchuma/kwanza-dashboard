@@ -9,7 +9,7 @@ const SelectForm = ({
   values = values || options;
   return (
     <div className="flex flex-col space-y-1 text-base  w-full">
-      <label className="text-muted dark:text-mutedLight dark:text-white">
+      <label className="text-muted dark:text-white dark:text-opacity-50 dark:text-white">
         {label || ""}
       </label>
       <select

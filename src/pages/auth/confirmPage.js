@@ -47,7 +47,7 @@ const ConfirmPage = () => {
           className="w-6/12 flex flex-col items-start px-10 justify-center"
         >
           <h1 className="font-bold text-3xl mb-2">Confirm Account</h1>
-          <p className="text-base text-muted dark:text-mutedLight">
+          <p className="text-base text-muted dark:text-white dark:text-opacity-50">
             Enter confirmation code we sent to{" "}
             <span className="font-bold">{identifier}</span>
           </p>
@@ -78,7 +78,7 @@ const ConfirmPage = () => {
                         toast.success("Check your email for confirmation code");
                       });
                     }}
-                    className="text-xs font-bold cursor-pointer hover:text-primary  text-muted dark:text-mutedLight"
+                    className="text-xs font-bold cursor-pointer hover:text-primary  text-muted dark:text-white dark:text-opacity-50"
                   >
                     {resend ? "Sending new Code" : " Resend Code"}
                   </p>

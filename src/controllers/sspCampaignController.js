@@ -16,7 +16,7 @@ export const getSSPCampaigns = async (path) => {
   });
 };
 export const getSSPCampaign = async (uuid) => {
-  return await app.patch(`/ssp-campaigns/${uuid}`, {
+  return await app.get(`/ssp-campaigns/${uuid}`, {
     headers: {
       Authorization: `Bearer ${getTokens()}`,
     },

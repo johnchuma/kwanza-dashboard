@@ -32,7 +32,7 @@ const InfluencersPage = () => {
       <div className="flex justify-between items-start">
         <div className="space-y-2">
           <h1 className="text-4xl 2xl:text-3xl font-bold">Influencers</h1>
-          <p className="text-sm text-muted dark:text-mutedLight">
+          <p className="text-sm text-muted dark:text-white dark:text-opacity-50">
             Manage influencers Below
           </p>
         </div>
@@ -46,7 +46,7 @@ const InfluencersPage = () => {
         </button>
       </div>
       <div className="bg-white  dark:bg-darkLight rounded-2xl mt-4 ">
-        <div className="bg-background dark:bg-darkLight rounded-t-2xl bg-opacity-40 px-6 items-center py-4 flex justify-between">
+        <div className="bg-background dark:bg-black rounded-t-2xl bg-opacity-40 dark:bg-opacity-10 px-6 items-center py-4 flex justify-between">
           <h1 className="font-bold text-lg">Users ({count})</h1>
           <input
             onChange={(e) => {
@@ -60,16 +60,16 @@ const InfluencersPage = () => {
           <table className="w-full text-base  ">
             <thead>
               <tr>
-                <th className="text-start text-muted dark:text-mutedLight">
+                <th className="text-start text-muted dark:text-white dark:text-opacity-50">
                   Name
                 </th>
-                <th className="text-start text-muted dark:text-mutedLight">
+                <th className="text-start text-muted dark:text-white dark:text-opacity-50">
                   Email
                 </th>
-                <th className="text-start text-muted dark:text-mutedLight">
+                <th className="text-start text-muted dark:text-white dark:text-opacity-50">
                   Phone
                 </th>
-                <th className="text-start text-muted dark:text-mutedLight">
+                <th className="text-start text-muted dark:text-white dark:text-opacity-50">
                   Role
                 </th>
               </tr>

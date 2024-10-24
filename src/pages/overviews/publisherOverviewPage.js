@@ -45,7 +45,7 @@ const PublisherOverviewPage = () => {
       <div className="flex justify-between">
         <div className="space-y-2">
           <h1 className="text-4xl font-bold">Overview</h1>
-          <p className="text-base text-muted dark:text-mutedLight">
+          <p className="text-base text-muted dark:text-white dark:text-opacity-50">
             Daily usage and engagement data
           </p>
         </div>
@@ -97,7 +97,7 @@ const PublisherOverviewPage = () => {
         <div className="w-8/12 bg-white py-8 rounded-xl  p-5">
           <div className="">
             <h1 className="font-bold text-2xl">Zones earnings comparison</h1>
-            <p className="text-sm text-muted dark:text-mutedLight">
+            <p className="text-sm text-muted dark:text-white dark:text-opacity-50">
               Comparison of zones earnings
             </p>
             <HorizontalBarChart
@@ -111,7 +111,7 @@ const PublisherOverviewPage = () => {
         </div>
         <div className="w-4/12 bg-white py-8 rounded-xl  p-5">
           <h1 className="font-bold text-2xl">Zones distribution</h1>
-          <p className="text-sm text-muted dark:text-mutedLight">
+          <p className="text-sm text-muted dark:text-white dark:text-opacity-50">
             Website and number of zones they have
           </p>
           <div className="mt-6">

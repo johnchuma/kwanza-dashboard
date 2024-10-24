@@ -12,7 +12,7 @@ const AdminRevenueReport = () => {
     <div>
       <div className="space-y-2">
         <h1 className="text-4xl font-bold">Revenue Report</h1>
-        <p className="text-base text-muted dark:text-mutedLight">
+        <p className="text-base text-muted dark:text-white dark:text-opacity-50">
           Daily usage and engagement data
         </p>
       </div>
@@ -30,7 +30,7 @@ const AdminRevenueReport = () => {
               className={`${
                 activeTab == index
                   ? "font-bold text-primary border-primary "
-                  : "border-transparent text-muted dark:text-mutedLight"
+                  : "border-transparent text-muted dark:text-white dark:text-opacity-50"
               } border-b-2 pb-2 cursor-pointer `}
             >
               {item}
@@ -48,13 +48,13 @@ const AdminRevenueReport = () => {
             </div>
             <div>
               <h1 className="text-3xl">5</h1>
-              <p className="text-muted dark:text-mutedLight">
+              <p className="text-muted dark:text-white dark:text-opacity-50">
                 Active campaigns
               </p>
             </div>
           </div>
           <div className="border-t border-muted py-3 px-5 ">
-            <div className="flex items-center space-x-3 cursor-pointer text-muted dark:text-mutedLight hover:text-primary">
+            <div className="flex items-center space-x-3 cursor-pointer text-muted dark:text-white dark:text-opacity-50 hover:text-primary">
               <h1 className="">View reports </h1>
               <AiOutlineArrowRight />
             </div>
@@ -69,11 +69,13 @@ const AdminRevenueReport = () => {
             </div>
             <div>
               <h1 className="text-3xl">$20000</h1>
-              <p className="text-muted dark:text-mutedLight">Revenue</p>
+              <p className="text-muted dark:text-white dark:text-opacity-50">
+                Revenue
+              </p>
             </div>
           </div>
           <div className="border-t border-muted py-3 px-5 ">
-            <div className="flex items-center space-x-3 cursor-pointer text-muted dark:text-mutedLight hover:text-primary">
+            <div className="flex items-center space-x-3 cursor-pointer text-muted dark:text-white dark:text-opacity-50 hover:text-primary">
               <h1 className="">View analytics </h1>
               <AiOutlineArrowRight />
             </div>
@@ -88,11 +90,13 @@ const AdminRevenueReport = () => {
             </div>
             <div>
               <h1 className="text-3xl">130</h1>
-              <p className="text-muted dark:text-mutedLight">Advertisers</p>
+              <p className="text-muted dark:text-white dark:text-opacity-50">
+                Advertisers
+              </p>
             </div>
           </div>
           <div className="border-t border-muted py-3 px-5 ">
-            <div className="flex items-center space-x-3 cursor-pointer text-muted dark:text-mutedLight hover:text-primary">
+            <div className="flex items-center space-x-3 cursor-pointer text-muted dark:text-white dark:text-opacity-50 hover:text-primary">
               <h1 className="">View analytics </h1>
               <AiOutlineArrowRight />
             </div>
@@ -107,11 +111,13 @@ const AdminRevenueReport = () => {
             </div>
             <div>
               <h1 className="text-3xl">24</h1>
-              <p className="text-muted dark:text-mutedLight">Publishers</p>
+              <p className="text-muted dark:text-white dark:text-opacity-50">
+                Publishers
+              </p>
             </div>
           </div>
           <div className="border-t border-muted py-3 px-5 ">
-            <div className="flex items-center space-x-3 cursor-pointer text-muted dark:text-mutedLight hover:text-primary">
+            <div className="flex items-center space-x-3 cursor-pointer text-muted dark:text-white dark:text-opacity-50 hover:text-primary">
               <h1 className="">View sites and zones report </h1>
               <AiOutlineArrowRight />
             </div>
@@ -120,7 +126,7 @@ const AdminRevenueReport = () => {
       </div>
       <div className="bg-white py-12 rounded-xl mt-8 p-5">
         <h1 className="font-bold text-2xl">Usage Trend</h1>
-        <p className="text-sm text-muted dark:text-mutedLight">
+        <p className="text-sm text-muted dark:text-white dark:text-opacity-50">
           Daily users sessions overtime
         </p>
         <TimeseriesChart

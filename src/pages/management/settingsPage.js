@@ -42,7 +42,7 @@ const SettingsPage = () => {
       <div className="flex justify-between items-start">
         <div className="space-y-2">
           <h1 className="text-4xl 2xl:text-3xl font-bold">Settings</h1>
-          <p className="text-sm text-muted dark:text-mutedLight">
+          <p className="text-sm text-muted dark:text-white dark:text-opacity-50">
             Manage system settings
           </p>
         </div>

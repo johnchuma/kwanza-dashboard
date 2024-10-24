@@ -41,7 +41,7 @@ const PublisherSidebar = () => {
           />
         </div>
         <div className="pt-5">
-          <h1 className="font-bold text-xs text-muted dark:text-mutedLight dark:text-opacity-80 mb-2">
+          <h1 className="font-bold text-xs text-muted dark:text-white dark:text-opacity-50 dark:text-opacity-80 mb-2">
             MAIN
           </h1>
           <SidebarItem
@@ -58,7 +58,7 @@ const PublisherSidebar = () => {
         </div>
 
         <div className="pt-5">
-          <h1 className="font-bold text-xs text-muted dark:text-mutedLight dark:text-white dark:text-opacity-80 mb-2">
+          <h1 className="font-bold text-xs text-muted dark:text-white dark:text-opacity-50 dark:text-white dark:text-opacity-80 mb-2">
             REPORTS
           </h1>
           <SidebarItem

@@ -74,7 +74,7 @@ const DSPCampaignsPage = () => {
       <div className="flex justify-between items-start">
         <div className="space-y-2">
           <h1 className="text-4xl 2xl:text-3xl font-bold">DSP Campaigns</h1>
-          <p className="text-sm text-muted dark:text-mutedLight">
+          <p className="text-sm text-muted dark:text-white dark:text-opacity-50">
             Create DSP campaigns Below
           </p>
         </div>
@@ -89,7 +89,7 @@ const DSPCampaignsPage = () => {
       </div>
       {data.length > 0 ? (
         <div className="bg-white  dark:bg-darkLight rounded-2xl mt-4 ">
-          <div className="bg-background dark:bg-darkLight rounded-t-2xl bg-opacity-40 px-6 items-center py-4 flex justify-between">
+          <div className="bg-background dark:bg-black rounded-t-2xl bg-opacity-40 dark:bg-opacity-10 px-6 items-center py-4 flex justify-between">
             <h1 className="font-bold text-lg">DSP campaigns ({count})</h1>
             <input
               onChange={(e) => {
@@ -103,35 +103,35 @@ const DSPCampaignsPage = () => {
             <table className="w-full text-base  ">
               <thead>
                 <tr>
-                  <th className="text-start text-muted dark:text-mutedLight">
+                  <th className="text-start text-muted dark:text-white dark:text-opacity-50">
                     Created At
                   </th>
 
-                  <th className="text-start text-muted dark:text-mutedLight">
+                  <th className="text-start text-muted dark:text-white dark:text-opacity-50">
                     Campaign
                   </th>
-                  <th className="text-start text-muted dark:text-mutedLight">
+                  <th className="text-start text-muted dark:text-white dark:text-opacity-50">
                     Status
                   </th>
-                  <th className="text-start text-muted dark:text-mutedLight">
+                  <th className="text-start text-muted dark:text-white dark:text-opacity-50">
                     Budget
                   </th>
-                  <th className="text-start text-muted dark:text-mutedLight">
+                  <th className="text-start text-muted dark:text-white dark:text-opacity-50">
                     Impressions
                   </th>
-                  <th className="text-start text-muted dark:text-mutedLight">
+                  <th className="text-start text-muted dark:text-white dark:text-opacity-50">
                     Clicks
                   </th>
-                  <th className="text-start text-muted dark:text-mutedLight">
+                  <th className="text-start text-muted dark:text-white dark:text-opacity-50">
                     CTR
                   </th>
-                  <th className="text-start text-muted dark:text-mutedLight">
+                  <th className="text-start text-muted dark:text-white dark:text-opacity-50">
                     Activate Time
                   </th>
-                  <th className="text-start text-muted dark:text-mutedLight">
+                  <th className="text-start text-muted dark:text-white dark:text-opacity-50">
                     Expire Time
                   </th>
-                  <th className="text-start text-muted dark:text-mutedLight"></th>
+                  <th className="text-start text-muted dark:text-white dark:text-opacity-50"></th>
                 </tr>
               </thead>
               <tbody className="mt-2">
@@ -191,10 +191,7 @@ const DSPCampaignsPage = () => {
                           />
                           {showOptions == true &&
                             selectedItem.uuid == item.uuid && (
-                              <div
-                                ref={dropdownRef}
-                                className="bg-white absolute rounded-xl top-4 shadow-lg z-30 right-0 w-56 px-2 py-4"
-                              >
+                              <div ref={dropdownRef} className="popup-style">
                                 {item.status != "draft" && (
                                   <SidebarItem
                                     icon={<AiOutlineLineChart />}

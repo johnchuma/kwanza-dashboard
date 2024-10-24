@@ -23,9 +23,9 @@ const Modal = ({ showModal, setShowModal, content, title }) => {
                   ease: "linear",
                 },
               }}
-              className="bg-white overflow-scroll z-50 w-6/12 2xl:w-5/12 min-h-48 max-h-[90vh] 2xl:max-h-[80vh] rounded-xl "
+              className="bg-white dark:bg-dark overflow-scroll z-50 w-6/12 2xl:w-5/12 min-h-48 max-h-[90vh] 2xl:max-h-[80vh] rounded-xl "
             >
-              <div className="bg-background py-4 px-8">
+              <div className="bg-background dark:bg-dark  py-4 px-8">
                 <div className="flex justify-between items-center">
                   <h1 className="font-bold text-xl">{title}</h1>
                   <AiOutlineClose

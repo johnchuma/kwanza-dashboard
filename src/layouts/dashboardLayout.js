@@ -1,7 +1,7 @@
 import { Outlet, useNavigate } from "react-router-dom";
 import DashboardNavbar from "../components/dashboardNavbar";
 import { createContext, useEffect, useState } from "react";
-import { getTokens } from "../utils/authStore";
+import { deleteTokens, getTokens } from "../utils/authStore";
 import { getMyInfo } from "../controllers/userController";
 import Loader from "../components/loader";
 import Sidebar from "../components/sidebars/adminSidebar";
@@ -26,12 +26,17 @@ const DashboardLayout = () => {
   useEffect(() => {
     const token = getTokens();
     if (token) {
-      getMyInfo().then((response) => {
-        const data = response.data.body;
-        console.log(data);
-        setLoading(false);
-        setUser(data);
-      });
+      getMyInfo()
+        .then((response) => {
+          const data = response.data.body;
+          console.log(data);
+          setLoading(false);
+          setUser(data);
+        })
+        .catch((e) => {
+          deleteTokens();
+          navigate("/login");
+        });
     } else {
       navigate("/login");
     }

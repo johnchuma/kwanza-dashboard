@@ -4,7 +4,7 @@ const RegisterPage = () => {
       <div className="w-8/12 2xl:w-6/12 rounded-2xl bg-white flex">
         <div className="w-6/12 flex flex-col items-start px-10 justify-center">
           <h1 className="font-bold text-3xl mb-2">Welcome Back</h1>
-          <p className="text-base text-muted dark:text-mutedLight">
+          <p className="text-base text-muted dark:text-white dark:text-opacity-50">
             Enter your credentials to login
           </p>
           <div className="space-y-2 mt-12 w-full">

@@ -22,7 +22,7 @@ const DashboardNavbar = ({ isDark, setIsDark }) => {
   }, [dropdownRef]);
   return (
     <div className="flex justify-end items-center space-x-5 py-4 z-50">
-      <div className="text-2xl text-muted dark:text-mutedLight dark:text-white">
+      <div className="text-2xl text-muted dark:text-white dark:text-opacity-50 dark:text-white">
         <div
           onClick={() => {
             setIsDark(!isDark);
@@ -42,7 +42,7 @@ const DashboardNavbar = ({ isDark, setIsDark }) => {
           <div className="size-10 items-center text-base justify-center flex bg-muted bg-opacity-40 rounded-full font-semibold">
             {user.name.split(" ").map((item) => item[0])}
           </div>
-          <FaChevronDown className="text-muted dark:text-mutedLight dark:text-white text-xs" />
+          <FaChevronDown className="text-muted dark:text-white dark:text-opacity-50 dark:text-white text-xs" />
         </div>
         {showAction && (
           <div
@@ -54,7 +54,7 @@ const DashboardNavbar = ({ isDark, setIsDark }) => {
                 setShowAction(false);
                 navigate("my-account");
               }}
-              className="flex space-x-2 items-center hover:bg-lightBackground dark:hover:text-white dark:hover:bg-darkLight py-2 px-4 transition-all duration-150 cursor-pointer text-base font-semibold text-muted dark:text-mutedLight dark:text-white dark:text-opacity-75"
+              className="flex space-x-2 items-center hover:bg-lightBackground dark:hover:text-white dark:hover:bg-darkLight py-2 px-4 transition-all duration-150 cursor-pointer text-base font-semibold text-muted dark:text-white dark:text-opacity-50 dark:text-white dark:text-opacity-75"
             >
               <div className="text-xl ">
                 <AiOutlineUser />
@@ -67,7 +67,7 @@ const DashboardNavbar = ({ isDark, setIsDark }) => {
                 setShowAction(false);
                 navigate("/login");
               }}
-              className="flex space-x-2 items-center hover:bg-lightBackground dark:hover:text-white dark:hover:bg-darkLight py-2 px-4 transition-all duration-150 cursor-pointer hover:bg- text-base font-semibold text-muted dark:text-mutedLight dark:text-white dark:text-opacity-75"
+              className="flex space-x-2 items-center hover:bg-lightBackground dark:hover:text-white dark:hover:bg-darkLight py-2 px-4 transition-all duration-150 cursor-pointer hover:bg- text-base font-semibold text-muted dark:text-white dark:text-opacity-50 dark:text-white dark:text-opacity-75"
             >
               <div className="text-xl ">
                 <IoPower />

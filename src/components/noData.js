@@ -9,10 +9,10 @@ const NoData = ({ title, description, action }) => {
         <div className="size-24 bg-primary bg-opacity-10 text-5xl text-primary items-center justify-center flex rounded-full">
           <AiOutlineQuestion />
         </div>
-        <h1 className="text-xl 2xl:text-lg font-bold text-muted dark:text-mutedLight mt-4">
+        <h1 className="text-xl 2xl:text-lg font-bold text-muted dark:text-white dark:text-opacity-50 mt-4">
           {title ?? "No Data"}
         </h1>
-        <p className="text-muted text-opacity-60 2xl:text-sm dark:text-mutedLight text-center">
+        <p className="text-muted text-opacity-60 2xl:text-sm dark:text-white dark:text-opacity-50 text-center">
           {description ?? "Your data will be shown here, when available"}{" "}
         </p>
         <div className="mt-6">{action}</div>

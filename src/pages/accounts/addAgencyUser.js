@@ -22,7 +22,7 @@ const AddAgencyUser = () => {
       <Back />
       <div className="space-y-2">
         <h1 className="text-4xl 2xl:text-3xl font-bold">New agency user</h1>
-        <p className="text-base text-muted dark:text-mutedLight">
+        <p className="text-base text-muted dark:text-white dark:text-opacity-50">
           Enter user details below
         </p>
       </div>
@@ -51,7 +51,7 @@ const AddAgencyUser = () => {
       >
         <div className="space-y-1">
           <h1 className="text-lg font-bold">Register new agency user here</h1>
-          <p className="text-base text-muted dark:text-mutedLight">
+          <p className="text-base text-muted dark:text-white dark:text-opacity-50">
             All fields are required
           </p>
         </div>

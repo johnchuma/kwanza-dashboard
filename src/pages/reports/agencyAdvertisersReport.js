@@ -41,7 +41,7 @@ const AgencyAdvertisersReport = () => {
             <h1 className="text-4xl 2xl:text-3xl font-bold">
               Advertisers reports
             </h1>
-            <p className="text-base text-muted dark:text-mutedLight">
+            <p className="text-base text-muted dark:text-white dark:text-opacity-50">
               view all Advertisers reports below
             </p>
           </div>
@@ -78,7 +78,7 @@ const AgencyAdvertisersReport = () => {
         <div className="flex space-x-4 mt-4">
           <div className="w-8/12 bg-white rounded-xl p-6">
             <h1 className="font-bold text-2xl ">Advetisers campaigns spent</h1>
-            <p className="text-sm text-muted dark:text-mutedLight">
+            <p className="text-sm text-muted dark:text-white dark:text-opacity-50">
               Amount that each advertiser has spent on their campaigns
             </p>
             <GroupedBarChart
@@ -97,7 +97,7 @@ const AgencyAdvertisersReport = () => {
           </div>
           <div className="w-4/12 bg-white rounded-xl p-4">
             <h1 className="font-bold text-2xl">Advertisers campaigns</h1>
-            <p className="text-sm text-muted dark:text-mutedLight">
+            <p className="text-sm text-muted dark:text-white dark:text-opacity-50">
               Advertisers campaigns comparisons
             </p>
             <DonutChart

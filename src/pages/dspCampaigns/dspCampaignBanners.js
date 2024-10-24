@@ -82,19 +82,19 @@ const DSPCampaignBanners = () => {
       <div className="flex justify-between items-start">
         <div className="space-y-2">
           <h1 className="text-4xl 2xl:text-3xl font-bold">{campaign.name}</h1>
-          <p className=" text-muted text-sm dark:text-mutedLight">
+          <p className=" text-muted text-sm dark:text-white dark:text-opacity-50">
             View campaign preview and linked banners
           </p>
         </div>
       </div>
-      <div className="bg-white p-8  rounded-lg mt-4">
+      <div className="bg-white dark:bg-darkLight p-8  rounded-lg mt-4">
         <div className="flex justify-between items-center mb-6">
           <h1 className=" text-xl ">Campaign details</h1>
           <div
             onClick={() => {
               navigate(`/edit-dsp-campaign/${campaign.uuid}`);
             }}
-            className="flex space-x-2 text-muted hover:text-primary cursor-pointer transition-all  items-center"
+            className="flex space-x-2 text-muted dark:text-white dark:text-opacity-50 hover:text-primary cursor-pointer transition-all  items-center"
           >
             <AiOutlineEdit />
             <p>Edit</p>
@@ -118,14 +118,18 @@ const DSPCampaignBanners = () => {
           },
         ].map((item) => {
           return (
-            <div className="flex border-b border-slate-200 py-2">
-              <div className="w-4/12 text-sm text-muted">{item.title}:</div>
+            <div className="flex border-b border-slate-200 dark:border-white dark:border-opacity-30 py-2">
+              <div className="w-4/12 text-sm text-muted dark:text-white dark:text-opacity-50">
+                {item.title}:
+              </div>
               <div className="w-4/12">{item.value}</div>
             </div>
           );
         })}
-        <div className="flex border-b border-slate-200 py-2">
-          <div className="w-4/12 text-sm text-muted">status:</div>
+        <div className="flex border-b border-slate-200 dark:border-white dark:border-opacity-30 py-2">
+          <div className="w-4/12 text-sm text-muted dark:text-white dark:text-opacity-50">
+            status:
+          </div>
           <div className="w-4/12">
             {campaign.status == "draft" ? (
               <button className="bg-background capitalize px-6 py-1 text-sm rounded-full font-bold text-muted">
@@ -144,7 +148,7 @@ const DSPCampaignBanners = () => {
         </div>
         {campaign.status == "draft" && (
           <div>
-            <p className="text-red-400 text-sm mt-8">
+            <p className="text-muted text-sm mt-8">
               Your campaign is not active yet, press button below to activate*
             </p>
             <button
@@ -218,7 +222,9 @@ const DSPCampaignBanners = () => {
             action={
               <button
                 onClick={() => {
-                  navigate(`/add-dsp-campaign-banner/?uuid=${params.uuid}`);
+                  navigate(
+                    `/add-campaign-banner/?uuid=${params.uuid}&type=dsp`
+                  );
                 }}
                 className="py-2 px-6 font-semibold rounded-lg bg-primary  text-sm text-white"
               >
@@ -235,7 +241,9 @@ const DSPCampaignBanners = () => {
               {campaign.status == "draft" && (
                 <button
                   onClick={() => {
-                    navigate(`/add-dsp-campaign-banner/?uuid=${params.uuid}`);
+                    navigate(
+                      `/add-campaign-banner/?uuid=${params.uuid}&type=dsp`
+                    );
                   }}
                   className="py-2 px-6 font-semibold rounded-lg bg-primary  text-sm text-white"
                 >
@@ -243,7 +251,7 @@ const DSPCampaignBanners = () => {
                 </button>
               )}
             </div>
-            <div className="grid grid-cols-1 bg-white p-6 rounded-xl">
+            <div className="grid grid-cols-1 bg-white dark:bg-darkLight p-6 rounded-xl">
               {data.map((item) => {
                 return (
                   <div className="  space-x-12 items-center flex   mt-2">
@@ -261,7 +269,7 @@ const DSPCampaignBanners = () => {
                       <h1 className="text-lg 2xl:text-base">
                         Dimensions: {item.width}x{item.height}
                       </h1>
-                      <h1 className="flex space-x-1  text-base 2xl:text-sm text-muted dark:text-mutedLight">
+                      <h1 className="flex space-x-1  text-base 2xl:text-sm text-muted dark:text-white dark:text-opacity-50">
                         <div className="">Destination URL:</div>{" "}
                         <span>{item.destinationURL}</span>{" "}
                       </h1>

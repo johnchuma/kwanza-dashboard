@@ -1,24 +1,24 @@
 import { useEffect, useState } from "react";
-import SubmitButton from "../../components/submitButton";
-import TextForm from "../../components/textForm";
-import { showError } from "../../utils/showError";
 import toast from "react-hot-toast";
-import SelectForm from "../../components/selectForm";
 import { useNavigate } from "react-router-dom";
-import Back from "../../components/back";
-import { useGetParams } from "../../utils/getParams";
-import { getWebsiteCategories } from "../../controllers/websiteCategoriesController";
-import { addDSPCampaignBanner } from "../../controllers/dspBannersController";
-import { BsImage } from "react-icons/bs";
-import { getImageDimensions } from "../../utils/getWidthAndHeightOnImage";
-import { FaFileZipper } from "react-icons/fa6";
-import { FiEdit } from "react-icons/fi";
-import { isFileImage, isZipped } from "../../utils/checkExtensions";
 
-const AddDSPCampaignBanner = () => {
+import SubmitButton from "./submitButton";
+import { useGetParams } from "../utils/getParams";
+import { getWebsiteCategories } from "../controllers/websiteCategoriesController";
+import Back from "./back";
+import { addSSPCampaignBanner } from "../controllers/sspBannersController";
+import { addDSPCampaignBanner } from "../controllers/dspBannersController";
+import { FaFileZipper } from "react-icons/fa6";
+import { BsImage } from "react-icons/bs";
+import { getImageDimensions } from "../utils/getWidthAndHeightOnImage";
+import { isFileImage, isZipped } from "../utils/checkExtensions";
+import TextForm from "./textForm";
+
+const BannersUploadingForm = () => {
   const [uploading, setUploading] = useState(false);
   const navigate = useNavigate();
   const params = useGetParams();
+  let type = params.type;
   const [categories, setCategories] = useState([]);
   const [isImage, setIsImage] = useState(true);
   const [pickedFiles, setPickedFiles] = useState([]); // Multiple files state
@@ -35,7 +35,7 @@ const AddDSPCampaignBanner = () => {
       <Back />
       <div className="space-y-2">
         <h1 className="text-4xl 2xl:text-3xl font-bold">Add new banner</h1>
-        <p className="text-base text-muted dark:text-white dark:text-opacity-50">
+        <p className="text-sm text-muted dark:text-white dark:text-opacity-50">
           Fill the form below to add a banner
         </p>
       </div>
@@ -59,16 +59,32 @@ const AddDSPCampaignBanner = () => {
                   "destinationURL",
                   e.target.destinationURL.value
                 );
-                formData.append("dsp_campaign_uuid", params.uuid);
+                if (type == "ssp") {
+                  formData.append("ssp_campaign_uuid", params.uuid);
+                } else {
+                  formData.append("dsp_campaign_uuid", params.uuid);
+                }
 
                 // Upload each image separately
-                return addDSPCampaignBanner(formData)
-                  .then((data) => {})
-                  .catch((err) => {
-                    console.log(err);
-                  });
+                return type == "ssp"
+                  ? addSSPCampaignBanner(formData)
+                      .then((data) => {
+                        console.log(data);
+                      })
+                      .catch((err) => {
+                        console.log(err);
+                      })
+                  : addDSPCampaignBanner(formData)
+                      .then((data) => {
+                        console.log(data);
+                      })
+                      .catch((err) => {
+                        console.log(err);
+                      });
               })
             );
+            setUploading(false);
+            navigate(-1); // Navigate back after uploads are completed
           } else {
             // Handle non-image files (e.g., zipped HTML) as a single upload
             var formData = new FormData();
@@ -79,18 +95,24 @@ const AddDSPCampaignBanner = () => {
             formData.set("destinationURL", e.target.destinationURL.value);
             formData.set("dsp_campaign_uuid", params.uuid);
 
-            addDSPCampaignBanner(formData)
-              .then((data) => {
-                toast.success("Zipped HTML file added successfully");
-              })
-              .catch((err) => {
-                // showError(err);
-                console.log(err);
-              });
+            type == "ssp"
+              ? addSSPCampaignBanner(formData)
+                  .then((data) => {
+                    setUploading(false);
+                    navigate(-1); // Navigate back after uploads are completed
+                  })
+                  .catch((err) => {
+                    console.log(err);
+                  })
+              : addDSPCampaignBanner(formData)
+                  .then((data) => {
+                    setUploading(false);
+                    navigate(-1); // Navigate back after uploads are completed
+                  })
+                  .catch((err) => {
+                    console.log(err);
+                  });
           }
-
-          setUploading(false);
-          navigate(-1); // Navigate back after uploads are completed
         }}
         className="bg-white dark:bg-darkLight py-12 rounded-xl mt-8 w-6/12 px-8"
       >
@@ -102,7 +124,7 @@ const AddDSPCampaignBanner = () => {
         </div>
         <div className="space-y-4 my-6 mb-8">
           <div className="space-y-2">
-            <label className="text-muted">Banner Type</label>
+            <label className="text-muted">Banner Type </label>
             <select
               onChange={(e) => {
                 setPickedFiles([]);
@@ -228,4 +250,4 @@ const AddDSPCampaignBanner = () => {
   );
 };
 
-export default AddDSPCampaignBanner;
+export default BannersUploadingForm;

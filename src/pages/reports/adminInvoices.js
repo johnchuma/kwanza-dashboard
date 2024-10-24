@@ -60,7 +60,7 @@ const AdminInvoices = () => {
       <div className="flex justify-between items-start">
         <div className="space-y-3">
           <h1 className="text-4xl 2xl:text-3xl font-bold">Invoices</h1>
-          <p className="text-sm text-muted dark:text-mutedLight">
+          <p className="text-sm text-muted dark:text-white dark:text-opacity-50">
             Manage publisher's invoices
           </p>
         </div>
@@ -76,7 +76,7 @@ const AdminInvoices = () => {
         )}
       </div>
       <div className="bg-white  dark:bg-darkLight rounded-2xl mt-4 ">
-        <div className="bg-background dark:bg-darkLight rounded-t-2xl bg-opacity-40 px-6 items-center py-4 flex justify-between">
+        <div className="bg-background dark:bg-black rounded-t-2xl bg-opacity-40 dark:bg-opacity-10 px-6 items-center py-4 flex justify-between">
           <h1 className="font-bold text-lg">Invoices ({data.length})</h1>
           <input
             onChange={(e) => {
@@ -90,16 +90,16 @@ const AdminInvoices = () => {
           <table className="w-full text-base  ">
             <thead>
               <tr>
-                <th className="text-start text-muted dark:text-mutedLight">
+                <th className="text-start text-muted dark:text-white dark:text-opacity-50">
                   Invoice sent at
                 </th>
-                <th className="text-start text-muted dark:text-mutedLight">
+                <th className="text-start text-muted dark:text-white dark:text-opacity-50">
                   Publisher name
                 </th>
-                <th className="text-start text-muted dark:text-mutedLight">
+                <th className="text-start text-muted dark:text-white dark:text-opacity-50">
                   Amount
                 </th>
-                <th className="text-start text-muted dark:text-mutedLight">
+                <th className="text-start text-muted dark:text-white dark:text-opacity-50">
                   Is Paid
                 </th>
               </tr>

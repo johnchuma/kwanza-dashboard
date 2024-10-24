@@ -34,7 +34,6 @@ const EditDSPCampaign = () => {
   const [showRightModal, setShowRightModal] = useState(false);
   const [showInterest, setShowInterest] = useState(false);
   const [campaign, setCampaign] = useState(null);
-
   useEffect(() => {
     findData();
   }, []);
@@ -80,7 +79,7 @@ const EditDSPCampaign = () => {
       />
       <div className="space-y-2">
         <h1 className="text-4xl 2xl:text-3xl font-bold">{campaign.name}</h1>
-        <p className="text-base text-muted dark:text-mutedLight">
+        <p className="text-base text-muted dark:text-white dark:text-opacity-50">
           Modify campaign details below
         </p>
       </div>
@@ -116,7 +115,7 @@ const EditDSPCampaign = () => {
           <div className="">
             <div className="space-y-1">
               <h1 className="text-lg font-bold">Basic Details</h1>
-              <p className="text-base text-muted dark:text-mutedLight">
+              <p className="text-base text-muted dark:text-white dark:text-opacity-50">
                 All fields are required
               </p>
             </div>
@@ -129,7 +128,7 @@ const EditDSPCampaign = () => {
               />
 
               <div className="space-y-2">
-                <p className="text-muted dark:text-mutedLight">
+                <p className="text-muted dark:text-white dark:text-opacity-50">
                   Campaign Destination
                 </p>
                 <input
@@ -151,7 +150,7 @@ const EditDSPCampaign = () => {
             <div className="">
               <div className="space-y-1">
                 <h1 className="text-lg font-bold">Campaign Duration</h1>
-                <p className="text-base text-muted dark:text-mutedLight">
+                <p className="text-base text-muted dark:text-white dark:text-opacity-50">
                   Set start and end date
                 </p>
               </div>
@@ -183,14 +182,16 @@ const EditDSPCampaign = () => {
             <div className="">
               <div className="space-y-1">
                 <h1 className="text-lg font-bold">Budget</h1>
-                <p className="text-base text-muted dark:text-mutedLight">
+                <p className="text-base text-muted dark:text-white dark:text-opacity-50">
                   Set campaign budget
                 </p>
               </div>
               <div className="space-y-4 my-6 mb-8">
                 {
                   <div className="space-y-2">
-                    <p className="text-muted dark:text-mutedLight">Budget</p>
+                    <p className="text-muted dark:text-white dark:text-opacity-50">
+                      Budget
+                    </p>
                     <input
                       className="input-style"
                       placeholder={"Enter your budget"}
@@ -221,7 +222,7 @@ const EditDSPCampaign = () => {
               <div className="">
                 <div className="space-y-1">
                   <h1 className="text-lg font-bold">Audience</h1>
-                  <p className="text-base text-muted dark:text-mutedLight">
+                  <p className="text-base text-muted dark:text-white dark:text-opacity-50">
                     Set campaign audience
                   </p>
                 </div>

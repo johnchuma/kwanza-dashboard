@@ -45,7 +45,7 @@ const AddAudiencePage = ({ uuid, setExpand, expand, close }) => {
       <div className="flex justify-between">
         <div className="space-y-1">
           <h1 className="text-3xl 2xl:text-2xl font-bold">New Audience</h1>
-          <p className="text-base 2xl:text-sm text-muted dark:text-mutedLight">
+          <p className="text-base 2xl:text-sm text-muted dark:text-white dark:text-opacity-50">
             Enter Audience details below
           </p>
         </div>
@@ -95,7 +95,7 @@ const AddAudiencePage = ({ uuid, setExpand, expand, close }) => {
         >
           <div className="space-y-1">
             <h1 className="text-lg font-bold">Register new audience here</h1>
-            <p className="text-base text-muted dark:text-mutedLight">
+            <p className="text-base text-muted dark:text-white dark:text-opacity-50">
               All fields are required
             </p>
           </div>
@@ -115,7 +115,7 @@ const AddAudiencePage = ({ uuid, setExpand, expand, close }) => {
 
             {/* pretarget group */}
             <div className="space-y-1">
-              <p className="text-base text-muted dark:text-mutedLight">
+              <p className="text-base text-muted dark:text-white dark:text-opacity-50">
                 Pre-targeted audience
               </p>
               <select
@@ -144,7 +144,7 @@ const AddAudiencePage = ({ uuid, setExpand, expand, close }) => {
           >
             <div className="space-y-1">
               <h1 className="text-lg font-bold">Select audience interest</h1>
-              <p className="text-base text-muted dark:text-mutedLight">
+              <p className="text-base text-muted dark:text-white dark:text-opacity-50">
                 Select category
               </p>
               <select

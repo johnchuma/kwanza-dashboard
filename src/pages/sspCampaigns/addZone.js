@@ -76,7 +76,7 @@ const AddZone = () => {
       />
       <div className="space-y-2">
         <h1 className="text-4xl 2xl:text-3xl font-bold">New Zone</h1>
-        <p className="text-base text-muted dark:text-mutedLight">
+        <p className="text-base text-muted dark:text-white dark:text-opacity-50">
           Enter Zone details below
         </p>
       </div>
@@ -109,7 +109,7 @@ const AddZone = () => {
       >
         <div className="space-y-1">
           <h1 className="text-lg font-bold">Add Zone</h1>
-          <p className="text-sm text-muted dark:text-mutedLight">
+          <p className="text-sm text-muted dark:text-white dark:text-opacity-50">
             All fields are required
           </p>
         </div>
