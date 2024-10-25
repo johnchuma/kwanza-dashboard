@@ -71,7 +71,7 @@ const AdminOverviewPage = () => {
           );
         })}
       </div> */}
-      <div className="grid grid-cols-4 gap-4 mt-4">
+      <div className="grid  grid-cols-2 md:grid-cols-4 gap-4 mt-4">
         <OverviewItem
           value={stats.activeSSPCampaigns}
           label={"Active SSP Campaigns"}
@@ -102,8 +102,8 @@ const AdminOverviewPage = () => {
         />
       </div>
 
-      <div className="flex space-x-4 mt-4">
-        <div className="w-8/12 bg-white py-8 rounded-xl  p-5">
+      <div className="flex flex-col md:flex-row space-x-0 space-y-4 md:space-y-0 md:space-x-4 mt-4">
+        <div className="w-full md:w-8/12 bg-white py-8 rounded-xl  p-5">
           <div className="">
             <h1 className="font-bold text-2xl">Usage Trend</h1>
             <p className="text-sm text-muted dark:text-white dark:text-opacity-50">
@@ -116,7 +116,7 @@ const AdminOverviewPage = () => {
             />
           </div>
         </div>
-        <div className="w-4/12 bg-white py-8 rounded-xl  p-5">
+        <div className=" w-full md:w-4/12 bg-white py-8 rounded-xl  p-5">
           <h1 className="font-bold text-2xl">Users Distribution</h1>
           <p className="text-sm text-muted dark:text-white dark:text-opacity-50">
             System users distribution

@@ -14,7 +14,7 @@ const RegisterPage = () => {
   const navigate = useNavigate();
   return (
     <div className="w-screen min-h-screen bg-background  flex justify-center items-center text-dark">
-      <div className="w-8/12 2xl:w-5/12 rounded-2xl bg-white flex">
+      <div className="w-10/12 md:w-8/12 2xl:w-5/12 rounded-2xl bg-white flex">
         <form
           onSubmit={(e) => {
             e.preventDefault();
@@ -37,9 +37,11 @@ const RegisterPage = () => {
                 toast.error(message);
               });
           }}
-          className="w-6/12  flex flex-col items-start px-10 justify-center"
+          className="w-full md:w-6/12 py-24  flex flex-col items-start px-8 md:px-10 justify-center"
         >
-          <h1 className="font-bold text-3xl mb-2">Are you a publisher ?</h1>
+          <h1 className="font-bold text-2xl md:text-3xl mb-2">
+            Are you a publisher ?
+          </h1>
           <p className="text-sm text-muted dark:text-white dark:text-opacity-50">
             Create a new publisher account
           </p>
@@ -80,7 +82,7 @@ const RegisterPage = () => {
             </p>
           </div>
         </form>
-        <div className="w-6/12 px-12 bg-background rounded-2xl m-3 ">
+        <div className="w-6/12 hidden md:block px-12 bg-background rounded-2xl m-3 ">
           <div className="py-32">
             <img className="" src="/loginn.png" />
           </div>

@@ -12,12 +12,14 @@ import AgencySidebar from "../components/sidebars/agencySidebar";
 import Modal from "../components/modal";
 import PrivacyPolicy from "../components/legal documentation/privacyPolicy";
 import TermsOfUse from "../components/legal documentation/termsOfUse";
+import { AnimatePresence, motion } from "framer-motion";
 export const UserContext = createContext();
 export const PublisherContext = createContext();
 const DashboardLayout = () => {
   const [isDark, setIsDark] = useState(false);
   const [user, setUser] = useState({});
   const [loading, setLoading] = useState(true);
+  const [showSidebar, setShowSidebar] = useState(false);
   const [revenue, setRevenue] = useState(0);
   const [showPrivacyModal, setShowPrivacyModal] = useState(false);
   const [showTermsModal, setShowTermsModal] = useState(false);
@@ -45,7 +47,13 @@ const DashboardLayout = () => {
     <Loader />
   ) : (
     <UserContext.Provider
-      value={{ user, setShowPrivacyModal, setShowTermsModal }}
+      value={{
+        user,
+        showSidebar,
+        setShowSidebar,
+        setShowPrivacyModal,
+        setShowTermsModal,
+      }}
     >
       <PublisherContext.Provider value={{ revenue, setRevenue }}>
         <Modal
@@ -72,18 +80,59 @@ const DashboardLayout = () => {
             </div>
           }
         />
+        <AnimatePresence>
+          {showSidebar && (
+            <div
+              onClick={() => {
+                setShowSidebar(false);
+              }}
+              className="inset-0 bg-black fixed z-50 bg-opacity-30"
+            >
+              <motion.div
+                exit={{
+                  x: -500,
+                  transition: {
+                    ease: "linear",
+                  },
+                }}
+                animate={{
+                  x: 0,
+                  transition: {
+                    ease: "linear",
+                  },
+                }}
+                initial={{
+                  x: -500,
+                  transition: {
+                    ease: "linear",
+                  },
+                }}
+                className="w-8/12 bg-white h-screen"
+              >
+                {user.role == "advertiser" && <AdvertiserSidebar />}
+                {user.role == "publisher" && <PublisherSidebar />}
+                {user.role == "admin" && <AdminSidebar />}
+                {user.role == "agency user" && <AgencySidebar />}
+              </motion.div>
+              <div
+                onClick={() => {}}
+                className="w-4/12 h-screen bg-white "
+              ></div>
+            </div>
+          )}
+        </AnimatePresence>
         <div
           className={`${isDark ? "dark" : "light"} transition-all duration-200`}
         >
           <div className="flex text-dark dark:text-white">
-            <div className="bg-white dark:bg-dark w-[19.5%] 2xl:w-[14%] border-r border-muted border-opacity-25 fixed h-screen">
+            <div className="bg-white dark:bg-dark hidden md:block w-[19.5%] 2xl:w-[14%] border-r border-muted border-opacity-25 fixed h-screen">
               {user.role == "advertiser" && <AdvertiserSidebar />}
               {user.role == "publisher" && <PublisherSidebar />}
               {user.role == "admin" && <AdminSidebar />}
               {user.role == "agency user" && <AgencySidebar />}
             </div>
-            <div className="bg-background dark:bg-dark w-[80.5%] 2xl:w-[86%]  ms-auto min-h-screen  ">
-              <div className="fixed w-[80.5%] 2xl:w-[86%]  ms-auto">
+            <div className="bg-background dark:bg-dark w-[100%] md:w-[80.5%] 2xl:w-[86%]  ms-auto min-h-screen  ">
+              <div className="fixed w-[100%] md:w-[80.5%] 2xl:w-[86%]  ms-auto">
                 <div className="w-11/12 md:w-11/12 lg:w-11/12 xl:w-[95%] mx-auto bg-background dark:bg-dark bg-opacity-85">
                   <DashboardNavbar isDark={isDark} setIsDark={setIsDark} />
                 </div>

@@ -4,9 +4,9 @@ const OverviewItem = ({ icon, value, label, action, actionTitle }) => {
   return (
     <div>
       <div className="bg-white dark:bg-darkLight w-full  rounded-xl  ">
-        <div className="flex space-x- px-5 py-3 items-center">
+        <div className="flex space-x-2 px-5 py-3 items-center">
           <div className="w-4/12">
-            <div className="size-16 rounded-full bg-primary bg-opacity-10 flex justify-center items-center text-2xl text-primary">
+            <div className="size-12 md:size-16 rounded-full bg-primary bg-opacity-10 flex justify-center items-center text-2xl text-primary">
               {icon}
             </div>
           </div>
