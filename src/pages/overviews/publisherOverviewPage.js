@@ -32,7 +32,11 @@ const PublisherOverviewPage = () => {
   const { revenue, setRevenue } = useContext(PublisherContext);
   useEffect(() => {
     getPublisherStats(user.uuid).then((response) => {
-      console.log("data", response.data.body);
+      const stats = response.data.body;
+      console.log("data", stats);
+      if (stats.zones == 0) {
+        navigate(`/add-website/?uuid=${user.uuid}`);
+      }
       setLoading(false);
       setStats(response.data.body);
       setRevenue(response.data.body.balance);
@@ -45,7 +49,7 @@ const PublisherOverviewPage = () => {
       <div className="flex justify-between">
         <div className="space-y-2">
           <h1 className="text-4xl font-bold">Overview</h1>
-          <p className="text-base text-muted dark:text-white dark:text-opacity-50">
+          <p className="text-sm text-muted dark:text-white dark:text-opacity-50">
             Daily usage and engagement data
           </p>
         </div>

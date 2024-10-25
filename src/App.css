@@ -40,11 +40,29 @@
     src: url(/public/google-sans/ProductSans-Black.ttf) ;
   }
 }
+.character {
+  @apply text-2xl rounded-lg pt-1 text-dark border-slate-300 ring-lightBackground focus:ring-primary focus:border-primary;
+}
+
+.container {
+  @apply  border-none active:border-none  focus:border-none focus:border-0 focus:ring-0 border-2 py-1  rounded-lg  ring-0 ring-transparent;
+}
+.container::selection{
+  @apply border-none
+}
+.character--selected {
+  @apply border-primary ring-primary 
+}
+
+.character--inactive {
+  @apply bg-background;
+}
+
 a{
   @apply text-primary active:text-primary
 }
 .input-style {
-  @apply w-full border-muted dark:bg-black dark:bg-opacity-30 dark:placeholder:dark:text-white dark:placeholder:text-opacity-60 border-opacity-30 focus:border-primary focus:ring-primary rounded-lg
+  @apply w-full placeholder:text-sm border-muted dark:bg-black dark:bg-opacity-30 dark:placeholder:dark:text-white dark:placeholder:text-opacity-60 border-opacity-30 focus:border-primary focus:ring-primary rounded-lg
 }
 
 .search-style {

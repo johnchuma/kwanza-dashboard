@@ -3,10 +3,12 @@ import toast from "react-hot-toast";
 import { useNavigate, useParams } from "react-router-dom";
 import { sendCode, verifyCode } from "../../controllers/authController";
 import { saveTokens } from "../../utils/authStore";
+import VerificationInput from "react-verification-input";
 
 const ConfirmPage = () => {
   const { identifier } = useParams();
   const [loading, setLoading] = useState(false);
+  const [code, setCode] = useState(null);
   const [resend, setResend] = useState(false);
   const navigate = useNavigate();
   return (
@@ -47,7 +49,7 @@ const ConfirmPage = () => {
           className="w-6/12 flex flex-col items-start px-10 justify-center"
         >
           <h1 className="font-bold text-3xl mb-2">Confirm Account</h1>
-          <p className="text-base text-muted dark:text-white dark:text-opacity-50">
+          <p className="text-sm text-muted dark:text-white dark:text-opacity-50">
             Enter confirmation code we sent to{" "}
             <span className="font-bold">{identifier}</span>
           </p>
@@ -85,19 +87,28 @@ const ConfirmPage = () => {
                 </div>
               </div>
               <input
+                className="input-style"
+                type="number"
+                required
+                placeholder="Enter code here"
+                name="code"
+              />
+              {/* <input
                 name="code"
                 className="w-full focus:border-primary focus:ring-primary rounded-lg"
                 placeholder="*********"
-              />
+              /> */}
             </div>
           </div>
-          <button
-            type="submit"
-            className="bg-primary py-3 transition-all w-full  font-semibold rounded-lg mt-4 text-white hover:bg-opacity-85  "
-          >
-            {loading ? "Checking Code..." : "Confirm"}
-          </button>
-          <p className="text-base mt-2">
+          {
+            <button
+              type="submit"
+              className="bg-primary py-3 transition-all w-full  font-semibold rounded-lg mt-4 text-white hover:bg-opacity-85  "
+            >
+              {loading ? "Checking Code..." : "Confirm"}
+            </button>
+          }
+          <p className="text-sm mt-2">
             Go back to{" "}
             <span
               onClick={() => {

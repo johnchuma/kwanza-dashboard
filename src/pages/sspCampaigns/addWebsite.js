@@ -27,7 +27,7 @@ const AddWebsite = () => {
       <Back />
       <div className="space-y-2">
         <h1 className="text-4xl 2xl:text-3xl font-bold">New Website</h1>
-        <p className="text-base text-muted dark:text-white dark:text-opacity-50">
+        <p className="text-sm text-muted dark:text-white dark:text-opacity-50">
           Enter website details below
         </p>
       </div>
@@ -43,9 +43,9 @@ const AddWebsite = () => {
           console.log(payload);
           setUploading(true);
           addWebsite(payload)
-            .then((data) => {
+            .then((res) => {
               toast.success("added successfully");
-              navigate(-1);
+              navigate(`/zones/?uuid=${res.data.body.uuid}`);
               setUploading(false);
             })
             .catch((err) => {
